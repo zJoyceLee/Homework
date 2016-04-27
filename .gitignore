@@ -1,2 +1,6 @@
+# Compiled CPP files
 bin/
 obj/
+
+# Compiled Python files
+.pyc
