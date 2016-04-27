@@ -1,9 +1,9 @@
-# Homework
+Homework
 ============
 This repo is used to save and share  my homeworks code.
 
-# ComputerArchitecture
-----
+ComputerArchitecture
+============
 studio:
 
 * Codeblocks16.01
