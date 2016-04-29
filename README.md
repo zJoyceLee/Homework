@@ -14,3 +14,13 @@ How to run with certain threads:
     cd ./bin/Debug/
     OMP_NUM_THREADS=10 ./xxx
 
+
+CompilePrinciple
+============
+studio:
+
+* Ubuntu14.04 LTS
+* Codeblocks16.01
+* python2.7.6
+
+
