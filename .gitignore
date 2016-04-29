@@ -4,3 +4,6 @@ obj/
 
 # Compiled Python files
 .pyc
+
+# tmp file
+.*~
