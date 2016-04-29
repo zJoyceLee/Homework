@@ -1,0 +1,7 @@
+Const num=100;
+Var a1, bcd
+begin
+Read(a1);
+bcd:=a1+num;
+write(A1,BCD)
+End.
