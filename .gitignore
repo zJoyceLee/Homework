@@ -6,4 +6,4 @@ obj/
 .pyc
 
 # tmp file
-.*~
+*.*~

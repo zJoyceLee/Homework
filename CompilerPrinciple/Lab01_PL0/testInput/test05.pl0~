@@ -1,7 +1,0 @@
-Const num=100;
-Var a_1, bcd
-begin
-Read(a_1);
-bcd:=a_1+num;
-write(A_1,BCD)
-End.
