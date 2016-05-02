@@ -4,14 +4,13 @@
 	<title>leave a message here.</title>
 	<meta charset="UTF-8">
 	<meta name="author" content="Joyce Lee">
-	<link rel="stylesheet" href="../css/leaveMessage.css">
-	<script src="../js/jquery.min.1.8.2.js"</script>
-	<script type="text/javascript" src="../js/js-leave-message.js"></script>
+	<link rel="stylesheet" href="leaveMessage.css">
+	<script src="//cdn.bootcss.com/jquery/2.2.1/jquery.js"></script>
+	<script type="text/javascript" src="leaveMessage.js"></script>
 </head>
 <body>
 	<div id="div-LeaveMessageForm">
-		<form id="form-LeaveMessageForm" name="LeaveMessageForm" method="post"
-		action="../cgi-bin/leave-a-message-form.py" onsubmit="return formcheck(this)">
+		<form id="form-LeaveMessageForm" name="LeaveMessageForm">
 			Name:
 			<input type="text" name="name" id="name"></input>
 			<br />
@@ -21,15 +20,15 @@
 			<br />
 
 			Gender:
-			<input type="radio" name="gender" value="male">male</input>
-			<input type="radio" name="gender" value="female">female</input>
+			<input type="radio" name="gender" value="male" checked="checked" />male
+			<input type="radio" name="gender" value="female" />female
 			<br />
 
 			Hobby:
-			<input type="checkbox" name="hobby-yoyo" value="yoyo">yoyo</input>
-			<input type="checkbox" name="hobby-music" value="music">music</input>
-			<input type="checkbox" name="hobby-Python" value="python">python</input>
-			<input type="checkbox" name="hobby-skateboard" value="skateboard">skateboard</input>
+			<input type="checkbox" name="hobby" value="yoyo">yoyo</input>
+			<input type="checkbox" name="hobby" value="music">music</input>
+			<input type="checkbox" name="hobby" value="python">python</input>
+			<input type="checkbox" name="hobby" value="skateboard">skateboard</input>
 			<br />
 
 			Please leave a message here:
@@ -37,7 +36,7 @@
 			<textarea name="messageArea" cols="50" rows="10" wrap="true">I would like to comment ...</textarea>
 			<br />
 
-			<input type="submit" name="submit" value="Submit"></input>
+			<input type="button" name="submit" value="Submit" onclick="formsubmit(this)"></input>
 			<input type="reset" name="reset" value="Reset"></input>
 		</form>
 	</div>
@@ -45,11 +44,17 @@
 	<hr/>
 
 	<div>
-		<button type="button" onClick="showAllMessages()">
+		<button type="button" onclick="showAllMessages()">
 			Show all messages
 		</button>
 	</div>
-	<div id=div-allMessages></div>
-
+	<div id="check-result">
+            <p>Check Result:</p>
+            <div></div>
+        </div>
+	<div id="all-messages">
+            <p>All Messages:</p>
+            <div></div>
+        </div>
 </body>
 </html>
