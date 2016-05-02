@@ -24,3 +24,9 @@ studio:
 * python2.7.6
 
 
+WebDevelopment
+============
+studio:
+
+* Ubuntu14.04 LTS
+* html, css, js...
