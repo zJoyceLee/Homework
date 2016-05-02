@@ -1,0 +1,36 @@
+.FloatingAd {
+	margin-top: 5px;
+	position: relative;
+	width: 120px;
+	height: 120px;
+	background-image: url(../image/raspbian.png);
+	cursor: pointer;
+}
+
+.Rpi-logo {
+	display: block;
+	width: 84px;
+	height: 100px;
+	float: left;
+	background-image: url(../image/rpi-logo.png);
+}
+
+.Banner {
+	text-align: center;
+	font-weight: bold;
+	color: #8C0000;
+
+	display: block;
+	width: 80%;
+	height: 24px;
+	float: right;
+	background-image: url(../image/rpi-logo.png)
+}
+
+.divclear {
+	clear: both;
+}
+
+.DefaultMargin {
+	margin: 0.5% 0.5% 0.5% 0.5%;
+}

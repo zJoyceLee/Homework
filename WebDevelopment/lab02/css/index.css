@@ -1,0 +1,153 @@
+body {
+    margin: 1%;
+    padding: 0;
+    background-color: #ffffcc;
+}
+
+div#Popup-Window {
+    float: left;
+    background-color: #ffffff;
+    text-align: center;
+    position: absolute;
+    width: 30%;
+    height: 20%;
+    top: 40%;
+    left: 35%;
+    border: 10px double #C1E0FF;
+    padding: 1%;
+}
+
+h1 {
+    color: #D6294E;
+    text-align: center;
+}
+
+div#Shadow {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.4;
+}
+
+#FloatingAd1 {
+    float: left;
+}
+#FloatingAd2 {
+    float: right;
+}
+
+div#container {
+    width: 80%;
+    height: 100%;
+    margin: 0px auto;
+    background-color: #F0FCC0;
+}
+
+div#logo-bar {
+    width: 100%;
+}
+
+div#NAVMenu {
+    width: 100%;
+    background-color: #D6294E;
+}
+
+div#Row1 {
+    width: 100%;
+    height: 100%;
+}
+
+div#News {
+    float: left;
+    text-align: center;
+    position: relative;
+    width: 18%;
+    height: 100%;
+    background-color: #FFBABA;
+    overflow: hidden;
+}
+
+div#News h3 {
+    font-family: "Vordana";
+    text-decoration: underline;
+}
+
+div#News ul {
+    list-style-type: none;
+    text-align: center;
+    top: 0px;
+    left: 0px;
+    padding: 0px;
+}
+
+div#ImageMap {
+    float: left;
+    width: 60%;
+    padding: 0;
+}
+
+div#ImageMap #RpiImage {
+    width: 100%;
+    height: 100%;
+}
+
+div#Media {
+    float: left;
+    width: 18%;
+}
+
+div#Row2 {
+    width: 100%;
+    height: 100%;
+}
+
+div#NewsList {
+    float: left;
+    width: 18%;
+    background-color: #FFBABA;
+}
+
+div#NewsList h3 {
+    text-align: center;
+}
+
+div#NewsList ul {
+    list-style-type: none;
+    top: 0;
+    left: 0;
+    padding: 0;
+}
+
+div#ContentDisplay {
+    float: left;
+    width: 60%;
+    height: 100%;
+    background-color: #FFFFFF;
+}
+
+div#ContentDisplay #ContentFrame {
+    width: 100%;
+    height: 100%;
+    border: 0px;
+}
+
+div#AdList {
+    float: left;
+    width: 18%;
+    background-color: #FFBABA;
+}
+
+div#AdList #AdTable {
+    font-family: "Verdana";
+    text-align: center;
+}
+
+div#footer {
+    clear: both;
+    text-align: center;
+    color: #FFFFFF;
+    background-color: #D6294E;
+}
