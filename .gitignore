@@ -3,11 +3,11 @@ bin/
 obj/
 
 # Compiled Python files
-.pyc
+*.pyc
 
 # tmp file
 *.*~
 
 # codeblocks layout
-.layout
-.cbp
+*.layout
+*.cbp
