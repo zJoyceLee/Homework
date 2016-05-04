@@ -48,7 +48,7 @@ CREATE TABLE OpenCourses (
     class_time VARCHAR(255),
     rated INTEGER,
 
-    PRIMARY KEY(course_id, teacher_id, semester),
+    PRIMARY KEY(course_id, teacher_id, semester, class_time),
     FOREIGN KEY(course_id) REFERENCES Courses(id),
     FOREIGN KEY(teacher_id) REFERENCES Teachers(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
