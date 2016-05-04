@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1456648985 source:e:\code\lab04_1\main.cpp
+	<iostream>
+	<string>
+	<stdlib.h>
+
