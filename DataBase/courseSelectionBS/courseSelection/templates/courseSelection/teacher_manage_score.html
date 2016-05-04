@@ -1,0 +1,244 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>课程管理系统 - 教师</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href={% static 'xk/css/bootstrap.min.css' %}>
+    <link rel="stylesheet" type="text/css" href={% static 'xk/css/chart.css' %}>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .table-responsive {
+            max-height: 409px;
+            overflow-y: auto;
+        }
+    </style>
+
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'tscore' %}">课程管理系统</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'tscore' %}">成绩管理<span class="sr-only">(current)</span></a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'tcourse' %}">课程管理</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'tstudent' %}">学生管理</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'logout' %}">退出</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-header" style="margin: 15px 0px;">
+                <h2>教师功能 - 成绩管理</h2>
+            </div>
+        </div>
+
+        <div class="col-sm-2" style="margin-bottom: 10px;">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#auditScore">
+                查看成绩分布
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="auditScore" tabindex="-0" role="dialog" aria-labelledby="auditScoreLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="auditScoreLabel">成绩分布</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="chart-bar-name-holder">
+                                {% for course in avg_grade %}
+                                    <div class="chart-bar-name">{{ course.cno__cname }}</div>
+                                {% endfor %}
+                            </div>
+                            <div class="chart-bar-holder">
+                                {% for grade in avg_grade %}
+                                    <div class="chart-bar">
+                                        <div class="chart-bar-pre"
+                                             style="width: {{ grade.avg_grade }}%; background-color: hsl({{ hue_list | random }}, 72%, 72%); ">
+                                            {{ grade.avg_grade }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="chart-range-holder">
+                                <div class="chart-range">0</div>
+                                <div class="chart-range">30</div>
+                                <div class="chart-range">60</div>
+                                <div class="chart-range" style="width: auto;">90</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3" style="margin-bottom: 10px;">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown"
+                        aria-expanded="true">
+                    请选择课程
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                    {% for c in course_list %}
+                        <li role="presentaion">
+                            <a role="menuitem" tabindex="-{{ forloop.counter }}" href="{% url 'tscore/course' c.cno %}">
+                                {{ c.cname }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == "error" %}
+                                <div class="alert alert-warning alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>失败!</strong> {{ message }}
+                                </div>
+                            {% endif %}
+                            {% if message.tags == "success" %}
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>成功!</strong> {{ message }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <p>课程: {{ course.cname }}</p>
+
+                    <p>任课老师: {{ course.tname }}</p>
+                    <hr style="margin: 0px 0px 10px;">
+                    <p>已选修此课程的学生</p>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" style="margin: 0px;">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>成绩</th>
+                                <th>编辑</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for sc in course.sc_set.all %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ sc.sno.sno }}</td>
+                                    <td>{{ sc.sno.sname }}</td>
+                                    <td>{{ sc.grade }}</td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#edit{{ forloop.counter }}" href="#">
+                                            Edit
+                                        </a>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="edit{{ forloop.counter }}"
+                                             tabindex="-{{ forloop.counter }}" role="dialog" aria-labelledby="editLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="editLabel">编辑成绩</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form class="form-horizontal"
+                                                              action="{% url 'scupdate' sc.id %}" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                <div class="col-sm-offset-1 col-sm-10">
+                                                                    <input type="text" class="form-control"
+                                                                           id="editScore" name="editScore"
+                                                                           placeholder="请输入成绩">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="col-sm-offset-1 col-sm-10">
+                                                                    <button type="submit" class="btn btn-primary">保存
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">关闭
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{% static 'xk/js/jquery.min.js' %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'xk/js/bootstrap.min.js' %}"></script>
+</body>
+
+</html>
