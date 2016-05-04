@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1461685469 source:/home/joyce/Code/Homework/ComputerArchitecture/Lab03_2_openMP/main.cpp
+1461685524 source:/home/joyce/Code/Homework/ComputerArchitecture/Lab03_2_openMP/main.cpp
 	<stdio.h>
 	<omp.h>
 

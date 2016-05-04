@@ -4,7 +4,7 @@
 #include <cmath>
 
 #include <complex>
-// #define NOPENMP
+#define NOPENMP
 
 int MandelbrotCalculate(const std::complex<double> & c, int maxiter) {
     std::complex<double> z = c;
@@ -22,7 +22,7 @@ int MandelbrotCalculate(const std::complex<double> & c, int maxiter) {
 
 int main()
 {
-    const int width = 60, height = 40, num_pixels = width * height;
+    const int width = 900, height = 400, num_pixels = width * height;
 
     const std::complex<double> center(-0.7, 0);
     const std::complex<double> span(2.7, -(4/3.0)* 2.7 * height/width);
