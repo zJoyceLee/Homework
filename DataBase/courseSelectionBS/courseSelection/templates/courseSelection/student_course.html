@@ -5,12 +5,13 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="author" content="Joyce Lee">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>课程管理系统 - 学生</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href={% static 'xk/css/bootstrap.min.css' %}>
+    <link rel="stylesheet" type="text/css" href={% static 'courseSelection/css/bootstrap.min.css' %}>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,15 +64,8 @@
 
         <div class="col-sm-12">
             <div class="page-header" style="margin: 15px 0px;">
-                <h2>{{ student.sname }}
-                    <small> {{ student.sno }} {{ student.sdept }}
-                        {% if student.sex == 'M' %}
-                            男
-                        {% else %}
-                            女
-                        {% endif %}
-                        {{ student.age }}岁
-                    </small>
+                <h2>{{ student.name }}
+                    <small> {{ student.id }} {{ student.college_name }} </small>
                 </h2>
             </div>
         </div>
@@ -220,9 +214,9 @@
 </div>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="{% static 'xk/js/jquery.min.js' %}"></script>
+<script src="{% static 'courseSelection/js/jquery.min.js' %}"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="{% static 'xk/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'courseSelection/js/bootstrap.min.js' %}"></script>
 </body>
 
 </html>
