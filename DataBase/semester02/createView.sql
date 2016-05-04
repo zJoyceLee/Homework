@@ -5,7 +5,8 @@ CREATE  VIEW S AS
 SELECT
     id AS '学号',
     name AS '姓名',
-    college_name AS '学院'
+    college_name AS '学院',
+    passwd
 FROM Students
 ORDER BY 3, 1;
 
@@ -14,7 +15,8 @@ CREATE VIEW T AS
 SELECT
     id AS '工号',
     name AS '姓名',
-    college_name AS '学院'
+    college_name AS '学院',
+    passwd
 FROM Teachers
 ORDER BY 3, 1;
 
