@@ -3,7 +3,9 @@ DataBase
 
 How to install MySQL on Ubuntu:
 
-    [sudo apt install mysql-server](https://help.ubuntu.com/lts/serverguide/mysql.html)
+    sudo apt install mysql-server
+
+* [install instruction](https://help.ubuntu.com/lts/serverguide/mysql.html)
 
 How to use MySQL in Python:
 
