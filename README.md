@@ -58,31 +58,8 @@ junior-winter: start learning on  databese, use MySQL, come true an app about co
 
 junior-spring: courseSelection BS with Django, MySQL
 
-How to use MySQL in Python:
+[Details](./DataBase/README.md)
 
-    import MySQLdb
-
-If there show 'ImportError: No module named MySQLdb':
-
-    pip install MySQL-python
-
-Or you are using python3:
-
-     pip3 install mysqlclient
-
-You can connect db like this:
-
-    import MySQLdb
-    db = MySQLdb.connect('localhost', user, passwd, dbName, charset='utf8')
-    cursor = db.cursor()
-
-Pay attention to:
-
-     try:
-         # execute
-         db.commit()
-     except:
-         db.rollback()
 
 WebDevelopment
 ============
