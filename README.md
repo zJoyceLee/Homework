@@ -2,22 +2,31 @@ Homework
 ============
 This repo is used to save and share  my homework codes.
 
+----
 studio:
 
-* Codeblocks16.01
-* Ubuntu14.04 LTS
-* python2.7.6
-* html, css, js...
+* Ubuntu14.04 LTS 64bit
+* Windows8.1 32bit (CPU z3735d)
 
 ComputerArchitecture
 ============
 time: junior-spring
+
+----
+studio:
+* CodeBlocks16.01
+* TDM GCC  5.1
 
 How to run with certain threads about OpenMP:
 
     cd ./bin/Debug/
     OMP_NUM_THREADS=10 ./xxx
 
+How to compile OpenMP project on Windows:
+
+* compile use tdm gcc
+* codeblecks-> project build options-> Compiler settings: add '-fopenmp'
+* codeblecks-> project build options-> Linker settings: add 'gomp'
 
 CompilePrinciple
 ============
@@ -25,6 +34,55 @@ time: junior-spring
 
 some about PL/0, calculator
 
+----
+studio:
+
+* python3.4.3
+* CodeBlocks16.01
+
+
+DataBase
+============
+time: junior-winter, junior-spring
+
+----
+studio:
+
+* MySQL 5.7
+* [Django 1.9](https://www.djangoproject.com/)
+* [Bootstrap 3.3.2](http://www.bootcss.com/)
+
+some about database:
+
+junior-winter: start learning on  databese, use MySQL, come true an app about courseSelection
+
+junior-spring: courseSelection BS with Django, MySQL
+
+How to use MySQL in Python:
+
+    import MySQLdb
+
+If there show 'ImportError: No module named MySQLdb':
+
+    pip install MySQL-python
+
+Or you are using python3:
+
+     pip3 install mysqlclient
+
+You can connect db like this:
+
+    import MySQLdb
+    db = MySQLdb.connect('localhost', user, passwd, dbName, charset='utf8')
+    cursor = db.cursor()
+
+Pay attention to:
+
+     try:
+         # execute
+         db.commit()
+     except:
+         db.rollback()
 
 WebDevelopment
 ============
