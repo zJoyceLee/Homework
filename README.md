@@ -1,15 +1,18 @@
 Homework
 ============
-This repo is used to save and share  my homeworks code.
-
-ComputerArchitecture
-============
+This repo is used to save and share  my homework codes.
 studio:
 
 * Codeblocks16.01
 * Ubuntu14.04 LTS
+* python2.7.6
+* html, css, js...
 
-How to run with certain threads:
+ComputerArchitecture
+============
+time: junior-spring
+
+How to run with certain threads about OpenMP:
 
     cd ./bin/Debug/
     OMP_NUM_THREADS=10 ./xxx
@@ -17,16 +20,21 @@ How to run with certain threads:
 
 CompilePrinciple
 ============
-studio:
+time: junior-spring
 
-* Ubuntu14.04 LTS
-* Codeblocks16.01
-* python2.7.6
+some about PL/0, calculator
 
 
 WebDevelopment
 ============
-studio:
+time: junior-spring
 
-* Ubuntu14.04 LTS
-* html, css, js...
+some about web, cgi
+
+
+OperatingSystem
+============
+time: junior-autumn
+
+some about os
+
