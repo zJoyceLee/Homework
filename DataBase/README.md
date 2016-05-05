@@ -48,5 +48,37 @@ How to write Trigger in MySQL:
 
     DELIMITER;
 
+I wrote a trigger in mysql command line like this:
 
+table is SC:
 
+    CREATE TABLE SC (
+        id CHAR(10) NOT NULL,
+        student_id CHAR(8),
+        grade INTEGER,
+
+        PRIMARY KEY(id, student_id),
+        FOREIGN KEY(id) REFERENCES OpenCourses(id) ON DELETE CASCADE,
+        FOREIGN KEY(student_id) REFERENCES Students(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+trigger like this:
+
+    DELIMITER //
+    CREATE TRIGGER grade_trigger
+    BEFORE
+    INSERT ON SC
+    FOR EACH ROW
+    BEGIN
+        IF NEW.grade < 0 THEN
+            SET NEW.grade = 0;
+        ELSEIF NEW.grade > 100 THEN
+            SET NEW.grade = 100;
+        END IF;
+    END;//
+
+Pay attention to table name:
+
+* INSERT: NEW
+* DELETE: OLD
+* UPDATE: NEW and OLD
