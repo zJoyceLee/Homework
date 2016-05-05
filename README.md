@@ -25,8 +25,8 @@ How to run with certain threads about OpenMP:
 How to compile OpenMP project on Windows:
 
 * compile use tdm gcc
-* codeblecks-> project build options-> Compiler settings: add '-fopenmp'
-* codeblecks-> project build options-> Linker settings: add 'gomp'
+* codeblocks-> project build options-> Compiler settings: add '-fopenmp'
+* codeblocks-> project build options-> Linker settings: add 'gomp'
 
 CompilePrinciple
 ============
