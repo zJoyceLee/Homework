@@ -37,7 +37,10 @@ Pay attention to:
 How to write Trigger in MySQL:
 
     DELIMITER //
-    create trigger [trigger_name] [before/after] [insert/delete/update] on [table_name] for each row
+    create trigger [trigger_name]
+    [before/after]
+    [insert/delete/update] on [table_name]
+    for each row
     begin
         --doing something like this
         insert into tab2(tab2_id) values (new.tab1_id);
