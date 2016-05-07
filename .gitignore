@@ -4,6 +4,7 @@ obj/
 
 # Compiled Python files
 *.pyc
+__pycache__/
 
 # tmp file
 *.*~

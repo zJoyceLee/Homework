@@ -1,6 +1,3 @@
-# ~/Code/Homework/DataBase/courseSelectionBS(branch:master*)
-# python manage.py inspectdb > ~/Code/Homework/DataBase/courseSelectionBS/courseSelection/models.py
-
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -27,7 +24,7 @@ class Colleges(models.Model):
 class Courses(models.Model):
     id = models.CharField(primary_key=True, max_length=8)
     name = models.CharField(max_length=255)
-    college_name = models.ForeignKey(Colleges, models.DO_NOTHING, db_column='college_name', blank=True, null=True)
+    college_name = models.ForeignKey(Colleges, models.CASCADE, db_column='college_name', blank=True, null=True)
 
     class Meta:
         # managed = False
@@ -36,21 +33,37 @@ class Courses(models.Model):
 
 class Opencourses(models.Model):
     semester = models.CharField(max_length=255)
-    course = models.ForeignKey(Courses, models.DO_NOTHING)
-    teacher = models.ForeignKey('Teachers', models.DO_NOTHING)
-    class_time = models.CharField(max_length=255, blank=True, null=True)
+    course = models.ForeignKey(Courses, models.CASCADE)
+    teacher = models.ForeignKey('Teachers', models.CASCADE)
+    class_time = models.CharField(max_length=255)
     rated = models.IntegerField(blank=True, null=True)
+    num_of_student = models.IntegerField(blank=True, null=True)
 
     class Meta:
         # managed = False
         db_table = 'OpenCourses'
-        unique_together = (('course', 'teacher', 'semester'),)
+        unique_together = (('semester', 'course', 'teacher', 'class_time'),)
+
+
+class Sc(models.Model):
+    sc_semester = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_semester')
+    SCcourse = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_courses')
+    SCteacher = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_teacher')
+    sc_class_time = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_class_time')
+    student = models.ForeignKey('Students', models.CASCADE)
+    grade = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        # managed = False
+        db_table = 'SC'
+        # unique_together = (('sc_semester', 'sc_course', 'sc_teacher', 'sc_class_time', 'student'),)
+        unique_together = ['sc_semester', 'SCcourse', 'SCteacher', 'sc_class_time', 'student']
 
 
 class Students(models.Model):
     id = models.CharField(primary_key=True, max_length=8)
     name = models.CharField(max_length=255)
-    college_name = models.ForeignKey(Colleges, models.DO_NOTHING, db_column='college_name', blank=True, null=True)
+    college_name = models.ForeignKey(Colleges, models.CASCADE, db_column='college_name', blank=True, null=True)
     passwd = models.CharField(max_length=20)
 
     class Meta:
@@ -61,119 +74,9 @@ class Students(models.Model):
 class Teachers(models.Model):
     id = models.CharField(primary_key=True, max_length=8)
     name = models.CharField(max_length=255)
-    college_name = models.ForeignKey(Colleges, models.DO_NOTHING, db_column='college_name')
+    college_name = models.ForeignKey(Colleges, models.CASCADE, db_column='college_name')
     passwd = models.CharField(max_length=20)
 
     class Meta:
         # managed = False
         db_table = 'Teachers'
-
-
-class AuthGroup(models.Model):
-    name = models.CharField(unique=True, max_length=80)
-
-    class Meta:
-        # managed = False
-        db_table = 'auth_group'
-
-
-class AuthGroupPermissions(models.Model):
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
-
-    class Meta:
-        # managed = False
-        db_table = 'auth_group_permissions'
-        unique_together = (('group', 'permission'),)
-
-
-class AuthPermission(models.Model):
-    name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
-    codename = models.CharField(max_length=100)
-
-    class Meta:
-        # managed = False
-        db_table = 'auth_permission'
-        unique_together = (('content_type', 'codename'),)
-
-
-class AuthUser(models.Model):
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField()
-    username = models.CharField(unique=True, max_length=30)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email = models.CharField(max_length=254)
-    is_staff = models.IntegerField()
-    is_active = models.IntegerField()
-    date_joined = models.DateTimeField()
-
-    class Meta:
-        # managed = False
-        db_table = 'auth_user'
-
-
-class AuthUserGroups(models.Model):
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-
-    class Meta:
-        # managed = False
-        db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
-
-
-class AuthUserUserPermissions(models.Model):
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
-
-    class Meta:
-        # managed = False
-        db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
-
-
-class DjangoAdminLog(models.Model):
-    action_time = models.DateTimeField()
-    object_id = models.TextField(blank=True, null=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.SmallIntegerField()
-    change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-
-    class Meta:
-        # managed = False
-        db_table = 'django_admin_log'
-
-
-class DjangoContentType(models.Model):
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-
-    class Meta:
-        # managed = False
-        db_table = 'django_content_type'
-        unique_together = (('app_label', 'model'),)
-
-
-class DjangoMigrations(models.Model):
-    app = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
-
-    class Meta:
-        # managed = False
-        db_table = 'django_migrations'
-
-
-class DjangoSession(models.Model):
-    session_key = models.CharField(primary_key=True, max_length=40)
-    session_data = models.TextField()
-    expire_date = models.DateTimeField()
-
-    class Meta:
-        # managed = False
-        db_table = 'django_session'

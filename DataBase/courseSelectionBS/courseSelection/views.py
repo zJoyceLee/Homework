@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
-from courseSelection.models import Students, Courses, Teachers, Opencourses
+from courseSelection.models import Students, Courses, Teachers, Opencourses, Sc
 from django.db.models import Avg
 from django.core.validators import *
 from django.contrib import messages
