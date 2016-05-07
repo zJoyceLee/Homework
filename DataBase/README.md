@@ -33,7 +33,6 @@ Pay attention to:
      except:
          db.rollback()
 
-
 How to write Trigger in MySQL:
 
     DELIMITER //

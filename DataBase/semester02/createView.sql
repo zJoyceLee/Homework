@@ -28,3 +28,15 @@ SELECT
     college_name AS '学院'
 FROM Courses
 ORDER BY 3, 1;
+
+DROP VIEW IF EXISTS SC;
+CREATE VIEW SC AS
+SELECT
+    semester,
+    course_id,
+    teacher_id,
+    class_time,
+    student_id,
+    grade
+FROM OpenCourses
+ORDER BY 1, 2, 3, 4, 5
