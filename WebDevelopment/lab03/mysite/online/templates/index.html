@@ -1,0 +1,19 @@
+{% load  staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Joyce Lee">
+     <link rel="stylesheet" type="text/css" href={% static 'online/css/index.css' %}>
+
+    <title>Welcome</title>
+</head>
+
+<body>
+<h1>welcome {{username}} !</h1>
+<br>
+<a href="http://127.0.0.1:8000/online/logout/">退出</a>
+</body>
+</html>

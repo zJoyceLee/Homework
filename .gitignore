@@ -12,3 +12,10 @@ __pycache__/
 # codeblocks layout
 *.layout
 *.cbp
+
+# node_modules
+node_modules/
+
+# PyCharm
+.idea/
+
