@@ -33,11 +33,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'regist' %}">Regist</a>
+          <a class="navbar-brand" href="{% url 'online:regist' %}">Regist</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="{% url 'login' %}">Login<span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="{% url 'online:login' %}">Login<span class="sr-only">(current)</span></a></li>
           </ul>
         </div>
       </div>
@@ -46,13 +46,14 @@
     <div class="col-sm-5" style="width: 40%; margin: 1% 30%;">
       <div class="panel panel-default">
         <div class="panel-body">
-          <form method = 'post' enctype="multipart/form-data" onsubmit="return validate_form(this)">
+          <form id="register_form" method = 'post' enctype="multipart/form-data">
             {% csrf_token %}
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon1">UserName</span>
               <input name="username" type="text" class="form-control"
                       placeholder="Please enter your username..."
                       aria-describedby="basic-addon1">
+              <span id="tips"></span>
             </div>
             <br />
 
@@ -98,8 +99,8 @@
 
             <div>
               <span class="input-group-addon" id="basic-addon1">Gender:</span>
-              <input type="radio" name="Sex" value="Male" checked="checked">Male
-              <input type="radio" name="Sex" value="Female">Female
+              <input type="radio" name="gender" value="Male" checked="checked">Male
+              <input type="radio" name="gender" value="Female">Female
             </div>
             <br />
 
@@ -114,18 +115,28 @@
 
             <div>
               <span class="input-group-addon" id="basic-addon1">Info</span>
-              <textarea name="messageArea"style="width: 100%;" rows="5" wrap="true">Enter your info...</textarea>
-            </div>
-            <br />
-            <div class="fileinput fileinput-new" data-provides="fileinput">
-              <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
-              <div>
-                <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
-                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+              <div style="width: 60%; float: right;">
+                <textarea name="messageArea"style="width: 100%;" rows="7" wrap="true">Enter your info...</textarea>              
               </div>
+              <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 40%;">
+                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 150px;"></div>
+                <div>
+                  <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+                  <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                </div>
+              </div>
+            </rdiv>
+            <br />
+            
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Verification Code</span>
+              <input type="text" name="verification-code" class="form-control"
+                      aria-describedby="basic-addon1" style="width: 50%;">
+              <img src="" alt="verify code">
             </div>
+
             <div>
-              <input type="submit" value="submit" class="btn btn-default btn-block" style="width: 50%; float: right;" />
+              <input type="button" value="submit" class="btn btn-default btn-block" style="width: 50%; float: right;" onclick="submit_onclick(event)" />
               <input type="reset" value="Reset" class="btn btn-default btn-block" style="width: 50%;" />
             </div>
           </form>
