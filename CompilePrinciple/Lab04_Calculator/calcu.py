@@ -157,15 +157,6 @@ class Interpreter(object):
         return result
 
     def expr(self):
-        """Arithmetic expression parser / interpreter.
-
-        calc> 7 + 3 * (10 / (12 / (3 + 1) - 1))
-        22
-
-        expr   : term ((PLUS | MINUS) term)*
-        term   : factor ((MUL | DIV) factor)*
-        factor : INTEGER | LPAREN expr RPAREN
-        """
         result = self.term()
 
         while self.current_token.type in (PLUS, MINUS):
