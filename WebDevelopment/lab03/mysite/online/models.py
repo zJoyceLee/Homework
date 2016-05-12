@@ -14,8 +14,11 @@ class User(models.Model):
     username = models.CharField(primary_key=True, max_length=255)
     passwd = models.CharField(max_length=255)
     email = models.CharField(max_length=255)
-    question = models.CharField(max_length=255)
-    anwser = models.CharField(max_length=255)
+    birthday = models.CharField(max_length=255)
+    birthplace = models.CharField(max_length=255)
+    gender = models.CharField(max_length=8, blank=True, null=True)
+    hobby = models.CharField(max_length=255)
+    info = models.CharField(max_length=1024)
 
     class Meta:
         managed = False
