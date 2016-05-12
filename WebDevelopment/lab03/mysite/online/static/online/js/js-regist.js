@@ -29,3 +29,65 @@ $(function() {
   });
   // console.log($('#country :selected').text(), $('#city :selected'));
 });
+
+
+// ajax
+$(document).ready(function(){
+    checkUserName();
+});
+//验证用户名是否存在
+function checkUserName(){
+    $("#username").blur(function(){
+        var username = $(this).val();
+        //此处替换你自己的jsp路径，jsp返回值：存在输出1，不存在输出0
+        var changeUrl = "check.php?username=" + username;
+        $.get(changeUrl,function(str){
+            if(str == '1'){
+                $("#tips").html("<font color=\"red\">您输入的用户名存在！请重新输入！</font>");
+            }else{
+                $("#tips").html("<font color=\"green\">恭喜您，可以注册！</font>");
+            }
+        });
+        return false;
+    })
+}
+
+
+function submit_onclick(event) {
+  console.log('submit_onclick');
+  if (validate_form($("#register_form")[0]) === false) {
+    event.preventDefault();
+    return false;
+  }
+
+  var username = $("#register_form").find("input[name='username']").val();
+  var password = $("#register_form").find("input[name='password']").val();
+  var email = $("#register_form").find("input[name='email']").val();
+  var birthday = $("#register_form").find("input[name='birthday']").datepicker().val();
+
+  var birthplace_country = $('#country :selected').text();
+  var birthplace_city = $('#city :selected').text();
+  var birthplace = birthplace_country + ';' + birthplace_city;
+
+  var gender = $("#register_form").find("input[name='gender']:checked").val();
+  var hobby = [];
+  $("#register_form").find("input[name='hobby']:checked").each(function () { hobby.push($(this).val()); });
+  var messageArea = $("#register_form").find("textarea").val();
+  var post_data = {
+    username: username,
+    password: password,
+    email: email,
+    birthday: birthday,
+    birthplace: birthplace,
+    gender: gender,
+    hobby: hobby,
+    messageArea: messageArea
+  };
+
+  console.log(post_data);
+  $.post('/online/regist/', post_data, function (data) {
+    console.log(data);
+  });
+
+  window.location.href = '127.0.0.1:8000/online/'
+}
