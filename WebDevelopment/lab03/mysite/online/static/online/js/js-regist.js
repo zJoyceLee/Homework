@@ -87,7 +87,7 @@ function submit_onclick(event) {
   console.log(post_data);
   $.post('/online/regist/', post_data, function (data) {
     console.log(data);
+    window.location = '/online/';
   });
 
-  window.location.href = '127.0.0.1:8000/online/'
 }
