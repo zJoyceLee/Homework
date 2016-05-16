@@ -4,10 +4,12 @@
 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render,render_to_response, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader, RequestContext
 from online.models import User
 from django.views import generic
+import json
+
 
 import hashlib
 
@@ -61,7 +63,7 @@ def regist(request):
             birthday = birthday,
             birthplace = birthplace,
             gender =  gender,
-            hobby = hobby,
+            hobby = json.dumps(hobby),
             info = info
         )
         return HttpResponse('regist successful.')
@@ -71,7 +73,21 @@ def regist(request):
 # Login Successful
 def index(req):
     username = req.COOKIES.get('username','')
-    return render_to_response('online/index.html' ,{'username':username})
+    user = User.objects.get(username = username)
+    userdict = {
+        'username':username,
+        'email': user.email,
+        'birthday': user.birthday,
+        'birthplace': user.birthplace,
+        'gender': user.gender,
+        'hobby': user.hobby,
+        'info': user.info
+    }
+    print(userdict)
+    return render_to_response(
+        'online/index.html',
+        userdict
+    )
 
 # Logout
 def logout(req):
@@ -80,3 +96,20 @@ def logout(req):
     #清理cookie里保存username
     response.delete_cookie('username')
     return response
+
+def get_user_info(req):
+    if req.method == 'GET':
+        username = req.COOKIES.get('username','')
+        print(username)
+        user = User.objects.get(username = username)
+        userdict = {
+            'username':username,
+            'email': user.email,
+            'birthday': user.birthday,
+            'birthplace': user.birthplace,
+            'gender': user.gender,
+            'hobby': user.hobby,
+            'info': user.info
+        }
+        print(userdict)
+        return JsonResponse(userdict)
