@@ -74,7 +74,10 @@ def regist(request):
                 photo_path = photo_path
             )
         except Exception as e:
-            return JsonResponse({'code': 2, 'msg': 'Create User failed, error: ' + str(e) })
+            return JsonResponse({
+                'code': 2,
+                'msg': 'Create User failed, error: ' + str(e)
+            })
         return JsonResponse({'code': 0, 'msg': 'success'})
 
 # Login Successful
@@ -95,7 +98,6 @@ def index(req):
         userdict
     )
 
-# Logout
 def logout(req):
     response = HttpResponseRedirect('/online/login')
     response.delete_cookie('username')

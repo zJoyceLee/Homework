@@ -16,6 +16,7 @@
     <script type="text/javascript" src={% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}></script>
     <script type="text/javascript" src={% static 'node_modules/jasny-bootstrap/dist/js/jasny-bootstrap.min.js' %}></script>
     <script type="text/javascript" src={% static 'node_modules/jqueryui/jquery-ui.min.js' %}></script>
+    <script type="text/javascript" src={% static 'node_modules/ckeditor/ckeditor.js' %}></script>
     <script type="text/javascript" src={% static 'online/js/js-form_vaildation.js' %}></script>
     <script type="text/javascript" src={% static 'online/js/js-regist.js' %}></script>
 
@@ -114,10 +115,8 @@
 
             <div>
               <span class="input-group-addon" id="basic-addon1">Info</span>
-              <div style="width: 60%; float: right;">
-                <textarea name="messageArea"style="width: 100%;" rows="7" wrap="true">Enter your info...</textarea>              
-              </div>
-              <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 40%;">
+              <textarea id="editor" name="messageArea">Enter your info...</textarea>
+              <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 100%">
                 <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 150px;"></div>
                 <div>
                   <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>

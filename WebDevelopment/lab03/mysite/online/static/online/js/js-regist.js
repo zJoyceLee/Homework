@@ -1,8 +1,8 @@
 'use strict';
 
-// date
 $(function() {
-  $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker();
+    CKEDITOR.replace( 'editor' );
 });
 
 // menu
@@ -14,7 +14,7 @@ $(function() {
   };
   $('#country').append( new Option('Country', 'Country') );
   $.each(country_lst, function (i, el) { $('#country').append( new Option(el, el) ); });
-  
+
   $('#city').append( new Option('City', 'City') );
   $('#city').selectmenu({});
 	$("#country").selectmenu({
