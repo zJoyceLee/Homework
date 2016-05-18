@@ -8,10 +8,11 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader, RequestContext
 from online.models import User
 from django.views import generic
+
+import random
 import json
-
-
 import hashlib
+from PIL import Image, ImageDraw, ImageFont
 
 # Login
 def login(request):
@@ -40,37 +41,41 @@ def login(request):
 def regist(request):
     if request.method == 'GET':
         return render(request, 'online/regist.html')
-
     elif request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        captcha = request.POST.get('captcha')
+        if captcha != request.session.get('captcha', None):
+            return JsonResponse({'code': 1, 'msg': 'invalid captcha'})
 
-        email = request.POST.get('email')
-        birthday = request.POST.get('birthday')
-        birthplace = request.POST.get('birthplace')
-        gender = request.POST.get('gender')
-        hobby = request.POST.getlist('hobby[]')
-        info = request.POST.get('messageArea')
-        photo_path = request.POST.get('photo_path')
+        try:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-        md5 = hashlib.md5()
-        md5.update(password.encode())
-        password_md5 = md5.hexdigest()
+            email = request.POST.get('email')
+            birthday = request.POST.get('birthday')
+            birthplace = request.POST.get('birthplace')
+            gender = request.POST.get('gender')
+            hobby = request.POST.getlist('hobby[]')
+            info = request.POST.get('messageArea')
+            photo_path = request.POST.get('photo_path')
 
-        User.objects.create(
-            username = username,
-            passwd = password_md5,
-            email = email,
-            birthday = birthday,
-            birthplace = birthplace,
-            gender =  gender,
-            hobby = json.dumps(hobby),
-            info = info,
-            photo_path = photo_path
-        )
-        return HttpResponse('regist successful.')
-        # return HttpResponseRedirect('/online/login/#')
+            md5 = hashlib.md5()
+            md5.update(password.encode())
+            password_md5 = md5.hexdigest()
 
+            User.objects.create(
+                username = username,
+                passwd = password_md5,
+                email = email,
+                birthday = birthday,
+                birthplace = birthplace,
+                gender =  gender,
+                hobby = json.dumps(hobby),
+                info = info,
+                photo_path = photo_path
+            )
+        except Exception as e:
+            return JsonResponse({'code': 2, 'msg': 'Create User failed, error: ' + str(e) })
+        return JsonResponse({'code': 0, 'msg': 'success'})
 
 # Login Successful
 def index(req):
@@ -85,7 +90,6 @@ def index(req):
         'hobby': user.hobby,
         'info': user.info
     }
-    print(userdict)
     return render_to_response(
         'online/index.html',
         userdict
@@ -93,16 +97,13 @@ def index(req):
 
 # Logout
 def logout(req):
-    # response = HttpResponse('Logout !!')
     response = HttpResponseRedirect('/online/login')
-    #清理cookie里保存username
     response.delete_cookie('username')
     return response
 
 def get_user_info(req):
     if req.method == 'GET':
         username = req.COOKIES.get('username','')
-        print(username)
         user = User.objects.get(username = username)
         userdict = {
             'username':username,
@@ -113,5 +114,24 @@ def get_user_info(req):
             'hobby': user.hobby,
             'info': user.info
         }
-        print(userdict)
         return JsonResponse(userdict)
+
+def gen_captcha(text, response):
+    image_width = len(text) * 14
+    image_height = 27
+    color = (0,0,0,255)
+    font = ImageFont.truetype('Ubuntu-B.ttf', 24)
+
+    txt = Image.new('RGB', (image_width, image_height), (255,255,255))
+    d = ImageDraw.Draw(txt)
+    d.text((0,0), text, font=font, fill=color)
+    txt.save(response, "jpeg")
+
+def captcha(req):
+    if req.method == 'GET':
+        response = HttpResponse(content_type='image/jpeg')
+        captcha_str = str(random.randrange(1000, 9999))
+        gen_captcha(captcha_str, response)
+        req.session['captcha'] = captcha_str
+        return response
+

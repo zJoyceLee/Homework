@@ -73,6 +73,8 @@ function submit_onclick(event) {
   var hobby = [];
   $("#register_form").find("input[name='hobby']:checked").each(function () { hobby.push($(this).val()); });
   var messageArea = $("#register_form").find("textarea").val();
+  var photo_path = '@TODO';
+  var captcha = $("#register_form").find("input[name='captcha']").val();
   var post_data = {
     username: username,
     password: password,
@@ -82,13 +84,15 @@ function submit_onclick(event) {
     gender: gender,
     hobby: hobby,
     messageArea: messageArea,
-    photo_path: photo_path
+    photo_path: photo_path,
+    captcha: captcha
   };
 
-  console.log(post_data);
   $.post('/online/regist/', post_data, function (data) {
-    console.log(data);
+    if (data['code'] !== 0) {
+      alert(data['msg']);
+      return;
+    }
     window.location = '/online/';
   });
-
 }

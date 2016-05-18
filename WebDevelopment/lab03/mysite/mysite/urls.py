@@ -16,7 +16,10 @@ Including another URLconf
 from django.conf.urls import url, patterns, include
 from django.contrib import admin
 
+from online import views as online
+
 urlpatterns = [
+    url(r'^$', online.login, name = 'login'),
     url(r'^admin/', admin.site.urls),
     url(r'^online/', include('online.urls')),
 ]
