@@ -51,6 +51,7 @@ def regist(request):
         gender = request.POST.get('gender')
         hobby = request.POST.getlist('hobby[]')
         info = request.POST.get('messageArea')
+        photo_path = request.POST.get('photo_path')
 
         md5 = hashlib.md5()
         md5.update(password.encode())
@@ -64,7 +65,8 @@ def regist(request):
             birthplace = birthplace,
             gender =  gender,
             hobby = json.dumps(hobby),
-            info = info
+            info = info,
+            photo_path = photo_path
         )
         return HttpResponse('regist successful.')
         # return HttpResponseRedirect('/online/login/#')

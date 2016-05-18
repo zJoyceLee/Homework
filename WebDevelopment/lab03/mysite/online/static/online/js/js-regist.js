@@ -81,7 +81,8 @@ function submit_onclick(event) {
     birthplace: birthplace,
     gender: gender,
     hobby: hobby,
-    messageArea: messageArea
+    messageArea: messageArea,
+    photo_path: photo_path
   };
 
   console.log(post_data);

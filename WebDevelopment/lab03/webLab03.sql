@@ -7,10 +7,11 @@ CREATE TABLE User (
     passwd VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     birthday VARCHAR(255) NOT NULL,
-    birthplace  VARCHAR(255) NOT NULL,
+    birthplace VARCHAR(255) NOT NULL,
     gender VARCHAR(8) DEFAULT 'Male',
     hobby VARCHAR(255) NOT NULL,
-    info VARCHAR(1024) NOT NULL,
+    info VARCHAR(1024),
+    photo_path VARCHAR(1024),
 
-    PRIMARY KEY(userName)
+    PRIMARY KEY(username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
