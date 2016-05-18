@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^index/$',views.index,name = 'index'),
     url(r'^logout/$',views.logout,name = 'logout'),
     url(r'^get_user_info/$', views.get_user_info, name = 'get_user_info'),
-    url(r'^captcha/$', views.captcha, name = 'captcha')
+    url(r'^captcha/$', views.captcha, name = 'captcha'),
+    url(r'^update_info/$', views.update_info, name = 'update_info'),
 ]

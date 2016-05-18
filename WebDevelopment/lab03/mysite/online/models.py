@@ -19,7 +19,7 @@ class User(models.Model):
     gender = models.CharField(max_length=8, blank=True, null=True)
     hobby = models.CharField(max_length=255)
     info = models.CharField(max_length=1024)
-    photo_path = models.CharField(max_length=1024)
+    # photo_path = models.CharField(max_length=1024)
 
     class Meta:
         managed = False

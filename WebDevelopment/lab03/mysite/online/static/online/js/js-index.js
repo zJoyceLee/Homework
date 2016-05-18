@@ -1,50 +1,58 @@
 'use strict';
 
+var country_lst = ['China', 'United States'];
+var city_lst = {
+    'China': ['Shanghai', 'Beijing', 'JiLin', 'JiuTai'],
+    'United States': ['New York', 'L.A.', 'Boston'],
+};
+
+function on_country_changed(value) {
+    // remove all options from city selectmenu
+    $('#city').find('option').remove().end();
+    $('#city').append( new Option('City', 'City') );
+    $.each(city_lst[value], function (i, el) {
+        $('#city').append( new Option(el, el) );
+    });
+    // refresh city selectmenu
+    $('#city').selectmenu('refresh');
+}
+
 // date
 $(function() {
   $( "#datepicker" ).datepicker();
+  CKEDITOR.replace( 'editor' );
 });
 
 // menu
 $(function() {
-  var country_lst = ['China', 'United States'];
-  var city_lst = {
-    'China': ['Shanghai', 'Beijing', 'JiLin', 'JiuTai'],
-    'United States': ['New York', 'L.A.', 'Boston'],
-  };
   $('#country').append( new Option('Country', 'Country') );
   $.each(country_lst, function (i, el) { $('#country').append( new Option(el, el) ); });
-  
+
   $('#city').append( new Option('City', 'City') );
   $('#city').selectmenu({});
 	$("#country").selectmenu({
     change: function (event, data) {
-      // remove all options from city selectmenu
-      $('#city').find('option').remove().end();
-      $('#city').append( new Option('City', 'City') );
-      $.each(city_lst[data.item.value], function (i, el) { $('#city').append( new Option(el, el) ); });
-      // refresh city selectmenu
-      $('#city').selectmenu('refresh');
+      on_coutry_changed(data.item.value);
     }
   });
-  // console.log($('#country :selected').text(), $('#city :selected'));
 });
 
 $(function() {
   $.get('/online/get_user_info/', function(data) {
-    // var user = JSON.parse(data);
-    // console.log(user);
-    // console.log(data);
-    // console.log(JSON.parse(data['hobby']));
     $("#register_form").find("input[name='username']").val(data['username']);
     $("#register_form").find("input[name='email']").val(data['email']);
     $("#register_form").find("input[name='birthday']").val(data['birthday']);
 
-    console.log(data['birthplace']);
-    var make = "United States"
-    $("#country option[value='" + make + "']".attr("selected"));
+    var birthplace = data['birthplace'].split(';');
+    var birthplace_country = birthplace[0];
+    var birthplace_city = birthplace[1];
+    $("#country option[value='" + birthplace_country + "']").attr('selected', 'selected');
+    $('#country').selectmenu('refresh');
+    on_country_changed(birthplace_country);
+    $("#city option[value='" + birthplace_city + "']").attr('selected', 'selected');
+    $('#city').selectmenu('refresh');
 
-    $("#register_form").find("textarea").val(data['info']);
+    CKEDITOR.instances.editor.setData(data['info']);
   });
 });
 
@@ -67,7 +75,8 @@ function submit_onclick(event) {
   var gender = $("#register_form").find("input[name='gender']:checked").val();
   var hobby = [];
   $("#register_form").find("input[name='hobby']:checked").each(function () { hobby.push($(this).val()); });
-  var messageArea = $("#register_form").find("textarea").val();
+  var messageArea = CKEDITOR.instances.editor.getData();
+  var captcha = $("#register_form").find("input[name='captcha']").val();
   var post_data = {
     username: username,
     password: password,
@@ -76,11 +85,12 @@ function submit_onclick(event) {
     birthplace: birthplace,
     gender: gender,
     hobby: hobby,
-    messageArea: messageArea
+    messageArea: messageArea,
+    captcha: captcha
   };
 
   console.log(post_data);
-  $.post('/online/regist/', post_data, function (data) {
+  $.post('/online/update_info/', post_data, function (data) {
     console.log(data);
     window.location = '/online/';
   });

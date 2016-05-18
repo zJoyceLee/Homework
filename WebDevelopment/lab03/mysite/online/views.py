@@ -56,7 +56,7 @@ def regist(request):
             gender = request.POST.get('gender')
             hobby = request.POST.getlist('hobby[]')
             info = request.POST.get('messageArea')
-            photo_path = request.POST.get('photo_path')
+            # photo_path = request.POST.get('photo_path')
 
             md5 = hashlib.md5()
             md5.update(password.encode())
@@ -71,7 +71,7 @@ def regist(request):
                 gender =  gender,
                 hobby = json.dumps(hobby),
                 info = info,
-                photo_path = photo_path
+                # photo_path = photo_path
             )
         except Exception as e:
             return JsonResponse({
@@ -137,3 +137,43 @@ def captcha(req):
         req.session['captcha'] = captcha_str
         return response
 
+@csrf_exempt
+def update_info(request):
+    if request.method == 'POST':
+        captcha = request.POST.get('captcha')
+        print(captcha)
+        if captcha != request.session.get('captcha', None):
+            return JsonResponse({'code': 1, 'msg': 'invalid captcha'})
+        try:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            email = request.POST.get('email')
+            birthday = request.POST.get('birthday')
+            birthplace = request.POST.get('birthplace')
+            gender = request.POST.get('gender')
+            hobby = request.POST.getlist('hobby[]')
+            info = request.POST.get('messageArea')
+            # photo_path = request.POST.get('photo_path')
+            print(info)
+
+            md5 = hashlib.md5()
+            md5.update(password.encode())
+            password_md5 = md5.hexdigest()
+
+            User.objects.filter(username = username).update(
+                passwd = password_md5,
+                email = email,
+                birthday = birthday,
+                birthplace = birthplace,
+                gender =  gender,
+                hobby = json.dumps(hobby),
+                info = info,
+                # photo_path = photo_path
+            )
+        except Exception as e:
+            return JsonResponse({
+                'code': 2,
+                'msg': 'Create User failed, error: ' + str(e)
+            })
+        return JsonResponse({'code': 0, 'msg': 'success'})

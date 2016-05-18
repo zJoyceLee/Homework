@@ -72,7 +72,7 @@ function submit_onclick(event) {
   var gender = $("#register_form").find("input[name='gender']:checked").val();
   var hobby = [];
   $("#register_form").find("input[name='hobby']:checked").each(function () { hobby.push($(this).val()); });
-  var messageArea = $("#register_form").find("textarea").val();
+  var messageArea = CKEDITOR.instances.editor.getData();
   var photo_path = '@TODO';
   var captcha = $("#register_form").find("input[name='captcha']").val();
   var post_data = {
