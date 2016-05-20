@@ -202,7 +202,7 @@
                                     <td>{{ row.cname }}</td>
                                     <td>{{ row.credit }}</td>
                                     <td>{{ row.cdept }}</td>
-                                    <td>{{ row.tname }}</td>
+                                    <td>{{ row.tno.tname }}</td>
                                     <td>
                                         <a data-toggle="modal" data-target="#editCourse{{ forloop.counter }}" href="#">
                                             Edit
@@ -295,7 +295,7 @@
                                                                     <input type="text" class="form-control"
                                                                            id="inputTname"
                                                                            name="inputTname"
-                                                                           value="{{ row.tname }}"
+                                                                           value="{{ row.tno }}"
                                                                            placeholder="请输入任课老师">
                                                                 </div>
                                                             </div>

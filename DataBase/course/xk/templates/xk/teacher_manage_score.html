@@ -159,7 +159,7 @@
                     {% endif %}
                     <p>课程: {{ course.cname }}</p>
 
-                    <p>任课老师: {{ course.tname }}</p>
+                    <p>任课老师: {{ course.tno.tname }}</p>
                     <hr style="margin: 0px 0px 10px;">
                     <p>已选修此课程的学生</p>
 
@@ -178,7 +178,7 @@
                             {% for sc in course.sc_set.all %}
                                 <tr>
                                     <th scope="row">{{ forloop.counter }}</th>
-                                    <td>{{ sc.sno.sno }}</td>
+                                    <td>{{ sc.sno }}</td>
                                     <td>{{ sc.sno.sname }}</td>
                                     <td>{{ sc.grade }}</td>
                                     <td>

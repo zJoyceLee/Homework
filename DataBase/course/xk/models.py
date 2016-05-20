@@ -35,6 +35,9 @@ class T(models.Model):
         managed = False
         db_table = 'T'
 
+    def __str__(self):
+        return self.tno
+
 
 class C(models.Model):
     cno = models.CharField(primary_key=True, max_length=8)

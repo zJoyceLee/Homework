@@ -1,7 +1,7 @@
 # -*-  coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404, redirect
 
-from xk.models import S, C, SC
+from xk.models import S, C, SC, T
 from django.db.models import Avg
 from django.core.validators import *
 from django.contrib import messages
@@ -201,12 +201,14 @@ def sc_delete(request):
 
 @admin_only
 def c_new(request):
+    print('This is c_new.')
     new_c = C()
+
     new_c.cno = (request.POST['inputCno'])
     new_c.cname = (request.POST['inputCname'])
     new_c.credit = int(request.POST['inputCredit'])
     new_c.cdept = (request.POST['inputCdept'])
-    new_c.tname = (request.POST['inputTname'])
+    new_c.tno = T.objects.get(tno=(request.POST['inputTname']))
     cno_list = [c.cno for c in C.objects.all()]
 
     try:
@@ -217,7 +219,16 @@ def c_new(request):
         else:
             messages.error(request, u"数据验证失败.")
     else:
-        new_c.save()
+        ss = "INSERT INTO C(cno, cname, credit, cdept, tno) VALUES ('{}', '{}', '{}','{}', '{}');".format(
+            new_c.cno,
+            new_c.cname,
+            new_c.credit,
+            new_c.cdept,
+            new_c.tno
+        )
+        print(ss)
+        with connection.cursor() as cursor:
+            cursor.execute(ss)
         messages.success(request, u"添加课程成功.")
     finally:
         return redirect(request.META.get('HTTP_REFERER'))
@@ -225,6 +236,7 @@ def c_new(request):
 
 @admin_only
 def c_update(request, c_cno):
+    print('This is c_update.')
     old_c = get_object_or_404(C, pk=c_cno)
 
     new_c = C()
@@ -232,7 +244,8 @@ def c_update(request, c_cno):
     new_c.cname = request.POST['inputCname']
     new_c.credit = int(request.POST['inputCredit'])
     new_c.cdept = request.POST['inputCdept']
-    new_c.tname = request.POST['inputTname']
+    # new_c.tname = request.POST['inputTname']
+    new_c.tno = T.objects.get(tno=(request.POST['inputTname']))
 
     cno_list_exclude_old_one = [x.cno for x in C.objects.exclude(cno=old_c.cno)]
 
@@ -242,7 +255,20 @@ def c_update(request, c_cno):
         messages.error(request, u'数据验证失败.')
     else:
         if new_c.cno == old_c.cno:
-            new_c.save()
+            ss = "DELETE FROM C  WHERE cno = '{}';".format(new_c.cno)
+            print(ss)
+            with connection.cursor() as cursor:
+                cursor.execute(ss)
+            ss = "INSERT INTO C(cno, cname, credit, cdept, tno) VALUES ('{}', '{}', '{}','{}', '{}');".format(
+                new_c.cno,
+                new_c.cname,
+                new_c.credit,
+                new_c.cdept,
+                new_c.tno
+            )
+            print(ss)
+            with connection.cursor() as cursor:
+                cursor.execute(ss)
             messages.success(request, u'修改课程成功.')
         else:
             if new_c.cno in cno_list_exclude_old_one:
@@ -272,11 +298,14 @@ def s_new(request):
     new_s = S()
     new_s.sno = request.POST['inputSno']
     new_s.sname = request.POST['inputSname']
-    new_s.sex = request.POST['inputSex']
+    new_s.gender = request.POST['inputSex']
     new_s.age = request.POST['inputAge']
     new_s.sdept = request.POST['inputSdept']
-    new_s.logn = request.POST['inputLogn']
-    new_s.pswd = request.POST['inputPswd']
+
+    md5 = hashlib.md5()
+    md5.update(new_s.sno.encode())
+    new_s.pswd = md5.hexdigest()
+
     sno_list = [s.sno for s in S.objects.all()]
 
     try:
@@ -287,7 +316,19 @@ def s_new(request):
         else:
             messages.error(request, u'数据验证错误.')
     else:
-        new_s.save()
+        ss = """INSERT INTO S(sno, sname, gender, age, sdept, pswd) VALUES
+        ('{}', '{}', '{}', {},'{}', '{}');""".format(
+            new_s.sno,
+            new_s.sname,
+            new_s.gender,
+            new_s.age,
+            new_s.sdept,
+            new_s.pswd
+        )
+        print(ss)
+        with connection.cursor() as cursor:
+            cursor.execute(ss)
+
         messages.success(request, u"添加学生成功.")
     finally:
         return redirect(request.META.get('HTTP_REFERER'))
@@ -300,21 +341,39 @@ def s_update(request, s_sno):
     new_s = S()
     new_s.sno = request.POST['inputSno']
     new_s.sname = request.POST['inputSname']
-    new_s.sex = request.POST['inputSex']
+    new_s.gender = request.POST['inputSex']
     new_s.age = request.POST['inputAge']
     new_s.sdept = request.POST['inputSdept']
-    new_s.logn = request.POST['inputLogn']
-    new_s.pswd = request.POST['inputPswd']
+
+    md5 = hashlib.md5()
+    md5.update(new_s.sno.encode())
+    new_s.pswd = md5.hexdigest()
 
     sno_list_exclude_old_one = [x.sno for x in S.objects.exclude(sno=old_s.sno)]
 
     try:
         new_s.clean_fields()
-    except ValidationError:
+    except ValidationError as e:
+        print(e)
         messages.error(request, u"数据验证失败.")
     else:
         if new_s.sno == old_s.sno:
-            new_s.save()
+            ss = "DELETE FROM S WHERE sno = '{}';".format(new_s.sno)
+            print(ss)
+            with connection.cursor() as cursor:
+                cursor.execute(ss)
+            ss = """INSERT INTO S(sno, sname, gender, age, sdept, pswd)
+            VALUES('{}', '{}', '{}', {},'{}', '{}');""".format(
+                new_s.sno,
+                new_s.sname,
+                new_s.gender,
+                new_s.age,
+                new_s.sdept,
+                new_s.pswd
+            )
+            print(ss)
+            with connection.cursor() as cursor:
+                cursor.execute(ss)
             messages.success(request, u'修改学生成功.')
         else:
             if new_s.sno in sno_list_exclude_old_one:
