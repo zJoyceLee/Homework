@@ -1,0 +1,414 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>课程管理系统 - 教师</title>
+
+    <link rel="stylesheet" type="text/css" href={% static 'xk/css/bootstrap.min.css' %}>
+    <link rel="stylesheet" type="text/css" href={% static 'xk/css/footable.bootstrap.css' %}>
+    <link rel="stylesheet" type="text/css" href={% static 'xk/css/footetable.bootstrap.min.css' %}>
+
+    <script src="{% static 'xk/js/jquery.min.js' %}"></script>
+    <!--<script src="{% static 'xk/js/bootstrap.min.js' %}"></script>-->
+    <script src="{% static 'xk/js/footable.js' %}"></script>
+    <script src="{% static 'xk/js/footable.min.js' %}"></script>
+
+    <style>
+        .col-sm-3 {
+            margin-bottom: 5px;
+        }
+
+        .table-responsive {
+            max-height: 409px;
+            overflow-y: auto;
+        }
+    </style>
+
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'tscore' %}">课程管理系统</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'tscore' %}">成绩管理</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'tcourse' %}">课程管理</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'tstudent' %}">学生管理<span class="sr-only">(current)</span></a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'logout' %}">退出</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-header" style="margin: 15px 0px;">
+                <h2>教师功能 - 学生管理</h2>
+            </div>
+        </div>
+
+        <div class="col-sm-2" style="margin-bottom: 10px;">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                新增
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">新增学生</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <form class="form-horizontal" action="{% url 'snew' %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="inputSno" class="col-sm-2 control-label">学号</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputSno" name="inputSno"
+                                               placeholder="请输入学号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSname" class="col-sm-2 control-label">姓名</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputSname" name="inputSname"
+                                               placeholder="请输入姓名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSex" class="col-sm-2 control-label">性别</label>
+
+                                    <div class="col-sm-10">
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-primary active">
+                                                <input type="radio" name="inputSex" id="inputSex1" autocomplete="off"
+                                                      value="Male" checked>男
+                                            </label>
+                                            <label class="btn btn-primary">
+                                                <input type="radio" name="inputSex" id="inputSex2" autocomplete="off"
+                                                        value="Femal">女
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAge" class="col-sm-2 control-label">年龄</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputAge" name="inputAge"
+                                               placeholder="请输入年龄">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSdept" class="col-sm-2 control-label">专业</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputSdept" name="inputSdept"
+                                               placeholder="请输入专业">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputLogn" class="col-sm-2 control-label">帐号</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="inputLogn" name="inputLogn"
+                                               placeholder="请输入账号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPswd" class="col-sm-2 control-label">密码</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="inputPswd" name="inputPswd"
+                                               placeholder="请输入密码">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary">保存</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>记录总数: {{ total_stu }}</p>
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == "error" %}
+                                <div class="alert alert-warning alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>失败!</strong> {{ message }}
+                                </div>
+                            {% endif %}
+                            {% if message.tags == "success" %}
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>成功!</strong> {{ message }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" style="margin: 0px;">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>年龄</th>
+                                <th>专业</th>
+                                <th>编辑</th>
+                                <th>删除</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for stu in student_list %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ stu.sno }}</td>
+                                    <td>{{ stu.sname }}</td>
+                                    <td>
+                                        {% if stu.gender == 'Male' %}
+                                            男
+                                        {% else %}
+                                            女
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ stu.age }}</td>
+                                    <td>{{ stu.sdept }}</td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#editStudent{{ forloop.counter }}" href="#">
+                                            Edit
+                                        </a>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="editStudent{{ forloop.counter }}"
+                                             tabindex="-{{ forloop.counter }}" role="dialog"
+                                             aria-labelledby="editStudentLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">编辑学生</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <form class="form-horizontal" action="{% url 'supdate' stu.sno %}" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                <label for="inputSno"
+                                                                       class="col-sm-2 control-label">学号</label>
+
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" class="form-control"
+                                                                           id="inputSno" name="inputSno"
+                                                                           value="{{ stu.sno }}"
+                                                                           placeholder="请输入学号">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputSname" class="col-sm-2 control-label">姓名</label>
+
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" class="form-control"
+                                                                           id="inputSname" name="inputSname"
+                                                                           value="{{ stu.sname }}"
+                                                                           placeholder="请输入姓名">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputSex"
+                                                                       class="col-sm-2 control-label">性别</label>
+
+                                                                <div class="col-sm-10">
+                                                                    <div class="btn-group" data-toggle="buttons">
+                                                                        <label class="btn btn-primary {% if stu.sex == 'M' %}active{% endif %}">
+                                                                            <input type="radio" name="inputSex"
+                                                                                   id="inputSex1" value="M"
+                                                                                   autocomplete="off"
+                                                                                    {% if stu.sex == 'M' %}
+                                                                                   checked
+                                                                                    {% endif %}>男
+                                                                        </label>
+                                                                        <label class="btn btn-primary {% if stu.sex == 'F' %}active{% endif %}">
+                                                                            <input type="radio" name="inputSex"
+                                                                                   id="inputSex2" value="F"
+                                                                                   autocomplete="off"
+                                                                                    {% if stu.sex == 'F' %}
+                                                                                   checked
+                                                                                    {% endif %}>女
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputAge"
+                                                                       class="col-sm-2 control-label">年龄</label>
+
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" class="form-control"
+                                                                           id="inputAge" name="inputAge"
+                                                                           value="{{ stu.age }}"
+                                                                           placeholder="请输入年龄">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputSdept" class="col-sm-2 control-label">专业</label>
+
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" class="form-control"
+                                                                           id="inputSdept" name="inputSdept"
+                                                                           value="{{ stu.sdept }}"
+                                                                           placeholder="请输入专业">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputLogn"
+                                                                       class="col-sm-2 control-label">帐号</label>
+
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" class="form-control"
+                                                                           id="inputLogn" name="inputLogn"
+                                                                           value="{{ stu.logn }}"
+                                                                           placeholder="请输入账号">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="inputPswd"
+                                                                       class="col-sm-2 control-label">密码</label>
+
+                                                                <div class="col-sm-10">
+                                                                    <input type="password" class="form-control"
+                                                                           id="inputPswd" name="inputPswd"
+                                                                           value="{{ stu.pswd }}"
+                                                                           placeholder="请输入密码">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <div class="col-sm-offset-2 col-sm-10">
+                                                                    <button type="submit" class="btn btn-primary">保存
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">关闭
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#delStudent{{ forloop.counter }}" href="#">
+                                            Del
+                                        </a>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="delStudent{{ forloop.counter }}"
+                                             tabindex="-{{ forloop.counter }}" role="dialog"
+                                             aria-labelledby="delStudentLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close"><span
+                                                                aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title" id="delCourseLabel">删除嘘声</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>确认要删除该记录吗?</p>
+
+                                                        <form class="form-horizontal"
+                                                              action="{% url 'sdelete' stu.sno %}" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="form-group">
+                                                                <div class="col-sm-10">
+                                                                    <button type="submit"
+                                                                            class="btn btn-primary btn-sm">确定
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-default btn-sm"
+                                                                            data-dismiss="modal">
+                                                                        取消
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
