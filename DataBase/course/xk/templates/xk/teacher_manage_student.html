@@ -10,13 +10,12 @@
     <title>课程管理系统 - 教师</title>
 
     <link rel="stylesheet" type="text/css" href={% static 'xk/css/bootstrap.min.css' %}>
-    <!--<link rel="stylesheet" type="text/css" href={% static 'xk/css/footable.bootstrap.css' %}>
-    <link rel="stylesheet" type="text/css" href={% static 'xk/css/footetable.bootstrap.min.css' %}>-->
+    <link rel="stylesheet" type="text/css" href={% static 'xk/css/footetable.bootstrap.min.css' %}>
 
     <script src="{% static 'xk/js/jquery.min.js' %}"></script>
     <script src="{% static 'xk/js/bootstrap.min.js' %}"></script>
-    <!--<script src="{% static 'xk/js/footable.js' %}"></script>
-    <script src="{% static 'xk/js/footable.min.js' %}"></script>-->
+    <script src="{% static 'xk/js/footable.min.js' %}"></script>
+    <script src="{% static 'xk/js/js-tms.js' %}"></script>
 
     <style>
         .col-sm-3 {
@@ -181,18 +180,18 @@
                         {% endfor %}
                     {% endif %}
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover" style="margin: 0px;">
+                    <div>
+                        <table id="student_table" class="table" style="margin: 0px;">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th data-breakpoints="xs">#</th>
                                 <th>学号</th>
                                 <th>姓名</th>
                                 <th>性别</th>
                                 <th>年龄</th>
                                 <th>专业</th>
-                                <th>编辑</th>
-                                <th>删除</th>
+                                <th data-type="html">编辑</th>
+                                <th data-type="html">删除</th>
                             </tr>
                             </thead>
                             <tbody>
