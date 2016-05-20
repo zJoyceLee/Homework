@@ -175,8 +175,11 @@ def sc_new(request):
     else:
         if c.cno in selected_course_list:
             messages.error(request, u"已选择此课程.")
+<<<<<<< HEAD
         else:
             pass
+=======
+>>>>>>> 690dc7d32438f7c08bb29d36a43a934f6d5719eb
     finally:
         return redirect(request.META.get('HTTP_REFERER'))
 
