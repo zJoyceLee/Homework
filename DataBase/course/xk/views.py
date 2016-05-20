@@ -179,13 +179,6 @@ def sc_new(request):
     else:
         if c.cno in selected_course_list:
             messages.error(request, u"已选择此课程.")
-        else:
-            # sc = SC(id='{0}'.format(random.randint(1, 10000000)).zfill(8), sno=student.sno, cno=c.cno)
-            # sc.save()
-            # print(sc.id)
-            # print(sc)
-            # messages.success(request, u"选课成功.")
-            pass
     finally:
         return redirect(request.META.get('HTTP_REFERER'))
 
