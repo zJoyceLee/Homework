@@ -34,7 +34,7 @@ CREATE TABLE C (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE SC (
-    id CHAR(8),
+    id INTEGER NOT NULL AUTO_INCREMENT,
     sno CHAR(8),
     cno CHAR(8),
     grade INTEGER,

@@ -165,11 +165,7 @@ def sc_new(request):
 
     try:
         c = C.objects.get(pk=request.POST['cno'])
-        ss = "INSERT INTO SC(id, sno, cno) VALUES ('{0}', '{1}', '{2}');".format(
-            '{0}'.format(random.randint(1, 10000000)).zfill(8),
-            student.sno,
-            c.cno
-        )
+        ss = "INSERT INTO SC(sno, cno) VALUES ('{}', '{}');".format(student.sno, c.cno)
         print(ss)
         with connection.cursor() as cursor:
             cursor.execute(ss)
@@ -180,11 +176,6 @@ def sc_new(request):
         if c.cno in selected_course_list:
             messages.error(request, u"已选择此课程.")
         else:
-            # sc = SC(id='{0}'.format(random.randint(1, 10000000)).zfill(8), sno=student.sno, cno=c.cno)
-            # sc.save()
-            # print(sc.id)
-            # print(sc)
-            # messages.success(request, u"选课成功.")
             pass
     finally:
         return redirect(request.META.get('HTTP_REFERER'))
