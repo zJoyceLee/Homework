@@ -12,13 +12,13 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href={% static 'xk/css/bootstrap.min.css' %}>
     <link rel="stylesheet" type="text/css" href={% static 'xk/css/chart.css' %}>
+    <link rel="stylesheet" type="text/css" href={% static 'xk/css/footable.bootstrap.min.css' %}>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script src="{% static 'xk/js/jquery.min.js' %}"></script>
+    <script src="{% static 'xk/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'xk/js/footable.min.js' %}"></script>
+    <script src="{% static 'xk/js/js-tmc.js' %}"></script>
+ 
 
     <style>
         .table-responsive {
@@ -157,29 +157,31 @@
                             {% endif %}
                         {% endfor %}
                     {% endif %}
-                    <p>课程: {{ course.cname }}</p>
+                    <p id="pCourse">课程: {{ course.cname }}</p>
 
                     <p>任课老师: {{ course.tno.tname }}</p>
                     <hr style="margin: 0px 0px 10px;">
                     <p>已选修此课程的学生</p>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover" style="margin: 0px;">
+                        <table id="score_table" class="table" style="margin: 0px;">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th data-breakpoints="xs">#</th>
                                 <th>学号</th>
                                 <th>姓名</th>
+                                <th>课程名</th>
                                 <th>成绩</th>
-                                <th>编辑</th>
+                                <th data-type="html">编辑</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for sc in course.sc_set.all %}
+                            {% for sc in sc_list %}
                                 <tr>
                                     <th scope="row">{{ forloop.counter }}</th>
                                     <td>{{ sc.sno }}</td>
                                     <td>{{ sc.sno.sname }}</td>
+                                    <td>{{ sc.cno.cname }}</td>
                                     <td>{{ sc.grade }}</td>
                                     <td>
                                         <a data-toggle="modal" data-target="#edit{{ forloop.counter }}" href="#">
@@ -234,11 +236,6 @@
     </div>
 </div>
 
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="{% static 'xk/js/jquery.min.js' %}"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="{% static 'xk/js/bootstrap.min.js' %}"></script>
 </body>
 
 </html>

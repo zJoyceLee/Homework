@@ -64,6 +64,8 @@ def index(request):
 
 @admin_only
 def teacher_manage_score(request, cno=None):
+    course_id =  request.POST.get('pCourse')
+    print('course_id', course_id)
     if cno:
         course = get_object_or_404(C, pk=cno)
     else:
@@ -71,6 +73,7 @@ def teacher_manage_score(request, cno=None):
     course_list = C.objects.all()
     tmp = [i for i in course_list]
     print(course_list)
+    sc_list = SC.objects.all()
 
     avg_grade = SC.objects.values('cno__cname').annotate(avg_grade=Avg('grade'))
     r = lambda: random.randint(0, 360)
@@ -80,6 +83,7 @@ def teacher_manage_score(request, cno=None):
         'course_list': course_list,
         'avg_grade': avg_grade,
         'hue_list': hue_list,
+        'sc_list': sc_list,
     })
 
 
