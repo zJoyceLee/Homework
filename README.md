@@ -40,6 +40,21 @@ studio:
 * python3.4.3
 * CodeBlocks16.01
 
+WebDevelopment
+============
+time: junior-spring
+
+some about web, cgi
+
+
+NumericalCalculation
+============
+time: junior-spring
+
+some about ~python course
+
+Although  the course name  is this, it has no relationship with the numercial calculation.
+
 
 DataBase
 ============
@@ -59,13 +74,6 @@ junior-winter: start learning on  databese, use MySQL, come true an app about co
 junior-spring: courseSelection BS with Django, MySQL
 
 [Details](./DataBase/README.md)
-
-
-WebDevelopment
-============
-time: junior-spring
-
-some about web, cgi
 
 
 OperatingSystem
