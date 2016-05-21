@@ -1,0 +1,10 @@
+hello
+world
+
+hi
+Joyce
+Happy
+Hacking
+Emacs
+love
+you
