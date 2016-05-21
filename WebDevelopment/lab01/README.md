@@ -10,12 +10,12 @@
 
 * [x] 建立摸板(logo、baner、导航条和页面底部信息包含在模板中),模板要求采用DIV+CSS进行页面布局
 * [x] 含有下拉菜单,[Example](http://www.divcss5.com/css-texiao/texiao758.shtml)
-* [x] 载入页面时弹出一个小的通知窗口（用DIV实现，以免被客户端“阻止弹出窗口”）（样例下载：[Example](http://www.divcss5.com/css-texiao/texiao608.shtml)
+* [x] 载入页面时弹出一个小的通知窗口(用DIV实现，以免被客户端“阻止弹出窗口”)(样例下载：[Example](http://www.divcss5.com/css-texiao/texiao608.shtml))
 * [x] 飘浮图片广告或对联广告(DIV的使用)
 * [x] 嵌入多媒体(嵌入视频、声音、FLASH等)
 * [x] 滚动公告栏
-* [x] 含有不规则表格（要求自己在记事本中写代码）
-* [x] 使用<iframe>，使得点击同一页面的链接，目标页面在iframe中显示
-* [x] 含有图像地图（内容可移到热点时显示也可点击热点时显示，显示在层、窗口或iframe中）
-* [x] 页面中使用多种学过的HTML标记,如无序列表、有序列表和定义列表,<img><table>等
+* [x] 含有不规则表格(要求自己在记事本中写代码)
+* [x] 使用iframe, 使得点击同一页面的链接，目标页面在iframe中显示
+* [x] 含有图像地图(内容可移到热点时显示也可点击热点时显示，显示在层、窗口或iframe中)
+* [x] 页面中使用多种学过的HTML标记,如无序列表、有序列表和定义列表,img, table等
 
