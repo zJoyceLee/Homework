@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1463971045 source:/home/joyce/Code/Homework/ComputerArchitecture/cpu_affinity/main.cpp
+	<stdint.h>
+	<stdio.h>
+	<sched.h>
+	<pthread.h>
+	<stdlib.h>
+
