@@ -1,21 +1,33 @@
 import numpy as np
+import matplotlib
+matplotlib.use('Gtk3Agg')
 import matplotlib.pyplot as plt
 
+import gi
+gi.require_version('Gtk', '3.0')
 from  gi.repository import Gtk, GLib
 
-def frequence(lst):
+def frequency(lst):
+    """
+    Recive a list and the file path: Foo(lst, path)
+    Return a dict: list value is key, frequency in file is value
+    """
     dic  = {}
     """ function here """
     return dic;
 
 def picture(dic):
+    """
+    Draw the dict with histogram
+    """
     n = len(dic)
-    frequence = tuple(dic.values())
+    frequency = tuple(dic.values())
     ind = np.arange(n)
     width =  0.35
     fig, ax = plt.subplots()
-    rects = ax.barh(ind, frequence, width, color = 'y')
-    ax.set_xlabel('word')
+    rects = ax.barh(ind, frequency, width, color = 'y')
+    ax.set_xlabel('frequency')
+    ax.set_ylabel('word')
     ax.set_title('Distribution')
     ax.set_yticks(ind + width)
 
@@ -37,6 +49,7 @@ def picture(dic):
 
 class myWindow(Gtk.Window):
     def __init__(self):
+        self.particle_lst = ['而', '何', '乎', '乃', '其', '且', '若', '所', '为', '焉', '也', '以', '因', '于', '与', '则', '者', '之']
         self.lst = []
         Gtk.Window.__init__(self, title = "Frequence Analysis")
         self.set_border_width(10)
@@ -69,8 +82,8 @@ class myWindow(Gtk.Window):
         self.grid.attach(self.he_checkbox, 1, 0, 1, 1)
         self.grid.attach(self.hu_checkbox, 2, 0, 1, 1)
         self.grid.attach(self.nai_checkbox, 3, 0, 1, 1)
-        self.grid.attach(self.label, 0, 1, 1, 1)
-        self.grid.attach(self.entry, 1, 1, 1, 1)
+        self.grid.attach(self.label, 0, 1, 2, 1)
+        self.grid.attach(self.entry, 2, 1, 2, 1)
         self.grid.attach(self.submit_button, 0, 2, 1, 1)
 
     def  on_er_checkbox_clicked(self, widget):
@@ -106,13 +119,13 @@ class myWindow(Gtk.Window):
         draw result
         """
         ss = self.entry.get_text()
-        if ss != '':
+        if ss != '' and  ss in self.particle_lst and ss not in self.lst:
             self.lst.append(ss)
 
         n = len(self.lst)
-        # className : grade
-        dic = frequence(self.lst)
+        dic = frequency(self.lst)
         d = {'1':1, '2':2, '3':3.3}
+        """ Here you shuld use dic After finished the func frequency"""
         picture(d)
 
 
