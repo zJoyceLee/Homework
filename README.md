@@ -51,7 +51,7 @@ NumericalCalculation
 ============
 time: junior-spring
 
-some about ~python course
+some about python course
 
 Although  the course name  is this, it has no relationship with the numercial calculation.
 
