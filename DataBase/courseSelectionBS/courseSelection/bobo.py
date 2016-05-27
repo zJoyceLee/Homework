@@ -1,0 +1,2 @@
+def haha():
+    return 'haha'
