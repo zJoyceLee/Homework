@@ -111,7 +111,10 @@ def student_course(request):
 @student_only
 def student_score(request):
     student = Students.objects.get(pk=request.session['role'])
-#     finished_course_list = [sc for sc in OpenCourses.objects.all() if sc.sno_id == student.sno and sc.grade and sc.grade > 0]
+    for row in Sc.objects.all():
+        print(row.grade)
+#     finished_course_list = [row for row in Sc.objects.all() if row.student == student.id and row.grade and row.grade > 0]
+#     print(finished_course_list)
 #     grade_list = [sc.grade for sc in finished_course_list]
 #     if len(grade_list) == 0:
 #         avg_grade = 0
@@ -120,8 +123,8 @@ def student_score(request):
 
     return render(request, 'courseSelection/student_score.html', {
         'student': student,
-        'finished_course_list': finished_course_list,
-        'avg_grade': avg_grade,
+#         'finished_course_list': finished_course_list,
+#         'avg_grade': avg_grade,
         'date': datetime.datetime.now()
     })
 
