@@ -65,14 +65,7 @@
         <div class="col-sm-12">
             <div class="page-header" style="margin: 15px 0px;">
                 <h2>{{ student.sname }}
-                    <small> {{ student.sno }} {{ student.sdept }}
-                        {% if student.sex == 'M' %}
-                            男
-                        {% else %}
-                            女
-                        {% endif %}
-                        {{ student.age }}岁
-                    </small>
+                    <small> {{ student.id }} {{ student.college_name }} </small>
                 </h2>
             </div>
         </div>
