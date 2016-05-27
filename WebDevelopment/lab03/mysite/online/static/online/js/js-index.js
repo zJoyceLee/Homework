@@ -52,6 +52,14 @@ $(function() {
     $("#city option[value='" + birthplace_city + "']").attr('selected', 'selected');
     $('#city').selectmenu('refresh');
 
+    var selectedHobby = new Array();
+    $('input[name="hobby"]:checked').each(function() {
+      selectedHobby.push(this.value);
+    });
+
+    // var gender = data['gender'];
+    // $("#gender checked[value='" + gender + "']").attr('selected');
+
     CKEDITOR.instances.editor.setData(data['info']);
   });
 });
