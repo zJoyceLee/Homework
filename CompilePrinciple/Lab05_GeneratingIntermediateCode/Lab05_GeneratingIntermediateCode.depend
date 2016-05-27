@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1463640090 source:/home/joyce/Code/Homework/CompilePrinciple/Lab05_GeneratingIntermediateCode/Main.cpp
+	<iostream>
+	<string>
+	<vector>
+	<map>
+	<sstream>
+	"LR0_Analyser.h"
+	"Analyser.h"
+	"Glossary.h"
+
+1463318236 /home/joyce/Code/Homework/CompilePrinciple/Lab05_GeneratingIntermediateCode/LR0_Analyser.h
+	<vector>
+	<string>
+	<iostream>
+	<sstream>
+
+1463318236 /home/joyce/Code/Homework/CompilePrinciple/Lab05_GeneratingIntermediateCode/Analyser.h
+	<string>
+	<vector>
+	<iostream>
+	<fstream>
+	<sstream>
+	<algorithm>
+	<map>
+	"Glossary.h"
+
+1463318236 /home/joyce/Code/Homework/CompilePrinciple/Lab05_GeneratingIntermediateCode/Glossary.h
+	<string>
+	<map>
+
