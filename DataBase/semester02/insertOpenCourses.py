@@ -60,7 +60,7 @@ for index, term in enumerate(semester):
              row[2],
              random.choice(class_time)
          )
-         # print(sql)
+         print(sql)
          try:
              cursor.execute(sql)
              db.commit()
