@@ -13,13 +13,12 @@ from django.db import models
 class Colleges(models.Model):
     name = models.CharField(primary_key=True, max_length=255)
 
-    class Meta:
-        # managed = False
-        db_table = 'Colleges'
-
     def __str__(self):
         return str(self.name)
 
+    class Meta:
+        # managed = False
+        db_table = 'Colleges'
 
 class Courses(models.Model):
     id = models.CharField(primary_key=True, max_length=8)
@@ -32,10 +31,10 @@ class Courses(models.Model):
 
 
 class Opencourses(models.Model):
-    semester = models.CharField(max_length=255)
-    course = models.ForeignKey(Courses, models.CASCADE)
-    teacher = models.ForeignKey('Teachers', models.CASCADE)
-    class_time = models.CharField(max_length=255)
+    semester = models.CharField(max_length=255, primary_key=True)
+    course = models.ForeignKey(Courses, models.CASCADE, primary_key=True)
+    teacher = models.ForeignKey('Teachers', models.CASCADE, primary_key=True)
+    class_time = models.CharField(max_length=255, primary_key=True)
     rated = models.IntegerField(blank=True, null=True)
     num_of_student = models.IntegerField(blank=True, null=True)
 
@@ -46,11 +45,11 @@ class Opencourses(models.Model):
 
 
 class Sc(models.Model):
-    sc_semester = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_semester')
-    SCcourse = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_courses')
-    SCteacher = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_teacher')
-    sc_class_time = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_class_time')
-    student = models.ForeignKey('Students', models.CASCADE)
+    sc_semester = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_semester', primary_key=True)
+    SCcourse = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_courses', primary_key=True)
+    SCteacher = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_teacher', primary_key=True)
+    sc_class_time = models.ForeignKey(Opencourses, models.CASCADE, related_name='sc_class_time', primary_key=True)
+    student = models.ForeignKey('Students', models.CASCADE, primary_key=True)
     grade = models.IntegerField(blank=True, null=True)
 
     class Meta:
