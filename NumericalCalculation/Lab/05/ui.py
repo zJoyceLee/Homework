@@ -7,12 +7,21 @@ import gi
 gi.require_version('Gtk', '3.0')
 from  gi.repository import Gtk, GLib
 
+import count
+
 def frequency(lst):
     """
     Recive a list and the file path: Foo(lst, path)
     Return a dict: list value is key, frequency in file is value
     """
-    dic  = {}
+    particle_dic  = {'而': 508, '何': 1108, '者': 408, '乃': 160, '因': 1964, '之': 2124, '為': 1261, '也': 6045, '所': 936, '其': 411, '以': 1121, '于': 561, '焉': 26, '与': 1050, '则': 0, '若': 1028, '乎': 71, '且': 987}
+    # all_the_text = ''
+    # with open('./result.txt') as file_obj:
+    #     all_the_text += file_obj.read()
+    # print(type(all_the_text), all_the_text)
+
+    dic  = {key: particle_dic[key] for key in lst}
+    print(dic)
     """ function here """
     return dic;
 
@@ -32,6 +41,7 @@ def picture(dic):
     ax.set_yticks(ind + width)
 
     word = tuple(dic.keys())
+    print(word)
     ax.set_yticklabels(word)
 
     def autolabel(rects):
@@ -71,7 +81,7 @@ class myWindow(Gtk.Window):
         self.nai_checkbox = Gtk.CheckButton("乃")
         self.nai_checkbox.connect("clicked", self.on_nai_checkbox_clicked)
 
-        self.label = Gtk.Label("请输入虚词")
+        self.label = Gtk.Label("请输入词")
         self.entry = Gtk.Entry()
 
         self.submit_button = Gtk.Button("Submit")
@@ -126,8 +136,11 @@ class myWindow(Gtk.Window):
         dic = frequency(self.lst)
         d = {'1':1, '2':2, '3':3.3}
         """ Here you shuld use dic After finished the func frequency"""
-        picture(d)
+        picture(dic)
 
+        if ss != '' and ss not in self.particle_lst:
+            print(count.count(ss))
+            picture({ss: count.count(ss)})
 
 if __name__ == '__main__':
     try:
