@@ -28,9 +28,13 @@ counter(255) in n*n matrix > min
 * version3
 -
 final version
+
 cv2.COLOR_BGR2GRAY
+
 cv2.findContours()
+
 cv2.drawContours()
+
 cv2.floodFill()
 
     python move_tree_by_floodfill.py
