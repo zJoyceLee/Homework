@@ -1,0 +1,12 @@
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li>
+              <a href="{% url 'forms:detail' question.id %}">{{ question.form_text }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No forms are available.</p>
+{% endif %}
+

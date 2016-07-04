@@ -1,0 +1,9 @@
+<h1>{{ form.form_text }}</h1>
+
+<ul>
+{% for field in form.field_set.all %}
+    <li>
+        {{ field.field_text  }} -- {{ field.answer }}
+    </li>
+{% endfor %}
+</ul>
