@@ -1,0 +1,146 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Joyce Lee">
+
+    <link rel="stylesheet" type="text/css" href={% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}>
+    <link rel="stylesheet" type="text/css" href={% static 'node_modules/jasny-bootstrap/dist/css/jasny-bootstrap.min.css' %}>
+    <link rel="stylesheet" type="text/css" href={% static 'node_modules/jqueryui/jquery-ui.min.css'%}>
+    <link rel="stylesheet" type="text/css" href={% static 'node_modules/jqueryui/jquery-ui.theme.min.css'%}>
+
+    <script type="text/javascript" src={% static 'node_modules/jquery/dist/jquery.min.js' %}></script>
+    <script type="text/javascript" src={% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}></script>
+    <script type="text/javascript" src={% static 'node_modules/jasny-bootstrap/dist/js/jasny-bootstrap.min.js' %}></script>
+    <script type="text/javascript" src={% static 'node_modules/jqueryui/jquery-ui.min.js' %}></script>
+    <script type="text/javascript" src={% static 'node_modules/ckeditor/ckeditor.js' %}></script>
+    <script type="text/javascript" src={% static 'online/js/js-form_vaildation.js' %}></script>
+    <script type="text/javascript" src={% static 'online/js/js-index.js' %}></script>
+
+    <title>Welcome</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+             <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{% url 'online:logout' %}">Logout</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'online:index' %}">Index<span class="sr-only">(current)</span></a></li>
+            <li class="navbar-brand">Welcome {{username}}</li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="col-sm-5" style="width: 40%; margin: 1% 30%;">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form id="register_form" method = 'post' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">UserName</span>
+              <input name="username" type="text" class="form-control"
+                      placeholder="Please enter your username..."
+                      aria-describedby="basic-addon1">
+              <span id="tips"></span>
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Password</span>
+              <input name="password" type="password" class="form-control"
+                      placeholder="Please enter your password..."
+                      aria-describedby="basic-addon2">
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Confirm</span>
+              <input name="confirm_password" type="password" class="form-control"
+                      placeholder="Please confirm your password..."
+                      aria-describedby="basic-addon2">
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Email</span>
+              <input name="email" type="text" class="form-control"
+                      placeholder="Please enter your email..."
+                      aria-describedby="basic-addon1">
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Birthday</span>
+              <input name="birthday" id="datepicker" type="text" class="form-control"
+                      aria-describedby="basic-addon1" readonly="readonly"/>
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Birthplace</span>
+              <select name="country" id="country">
+              </select>
+              <select name="city" id="city">
+              </select>
+            </div>
+            <br />
+
+            <div>
+              <span class="input-group-addon" id="basic-addon1">Gender:</span>
+              <input type="radio" name="gender" value="Male" checked="checked">Male
+              <input type="radio" name="gender" value="Female">Female
+            </div>
+            <br />
+
+            <div>
+              <span class="input-group-addon" id="basic-addon1">Hobby:</span>
+              <input type="checkbox" name="hobby" value="book" checked="checked">Books
+              <input type="checkbox" name="hobby" value="music">Music
+              <input type="checkbox" name="hobby" value="photo">Photo
+              <input type="checkbox" name="hobby" value="sport">Sport
+            </div>
+            <br />
+
+            <div>
+              <span class="input-group-addon" id="basic-addon1">Info</span>
+              <textarea id="editor" name="messageArea">Enter your info...</textarea>
+              <div class="fileinput fileinput-new" data-provides="fileinput" style="width: 100%">
+                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%; height: 150px;"></div>
+                <div>
+                  <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+                  <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                </div>
+              </div>
+            </rdiv>
+            <br />
+            
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Captcha</span>
+              <input type="text" name="captcha" class="form-control"
+                      aria-describedby="basic-addon1" style="width: 50%;">
+              <img src="/online/captcha/" alt="Captcha">
+            </div>
+
+            <div>
+              <input type="button" value="submit" class="btn btn-default btn-block" style="width: 50%; float: right;" onclick="submit_onclick(event)" />
+              <input type="reset" value="Reset" class="btn btn-default btn-block" style="width: 50%;" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
