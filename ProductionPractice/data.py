@@ -3,6 +3,7 @@ import hashlib
 import random
 
 def execSQL(ss):
+    print(ss)
     try:
         cursor.execute(ss)
         db.commit()
@@ -42,30 +43,14 @@ commodity_info = [
     <table border="0" cellpadding="1" cellspacing="1" style="width:100%">
         <tbody>
                 <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
+                        <td>产品名称：Sony/索尼 ILCE-7SM2单机</td>
+                        <td>品牌: Sony/索尼</td>
+                        <td>像素: 约 1220万有效像素</td>
                 </tr>
                 <tr>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                </tr>
-        </tbody>
-    </table>
-    """,
-    """
-    <table border="0" cellpadding="1" cellspacing="1" style="width:100%">
-        <tbody>
-                <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                </tr>
-                <tr>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
+                        <td>上市时间: 2015年</td>
+                        <td>传感器尺寸: 约 35.6x23.8mm（35mm全画幅）</td>
+                        <td>感光元件类型: Exmor CMOS</td>
                 </tr>
         </tbody>
     </table>
@@ -74,14 +59,30 @@ commodity_info = [
     <table border="0" cellpadding="1" cellspacing="1" style="width:100%">
         <tbody>
                 <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
+                        <td>品牌: Sony/索尼</td>
+                        <td>像素: 约 2430万</td>
+                        <td>有效像素传感器尺寸: 约 35.8x23.9mm</td>
+                </tr>
+        </tbody>
+    </table>
+    """,
+    """
+    <table border="0" cellpadding="1" cellspacing="1" style="width:100%">
+        <tbody>
+                <tr>
+                        <td>产品名称：Sony/索尼</td>
+                        <td>ILCE-7单机品牌: Sony/索尼</td>
+                        <td>像素: 约 2430万有效像素</td>
                 </tr>
                 <tr>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
+                        <td>上市时间: 2013年</td>
+                        <td>传感器尺寸: 约 35.8x23.9mm</td>
+                        <td>感光元件类型: CMOS</td>
+                </tr>
+                <tr>
+                        <td>存储类型: MS卡 SD卡</td>
+                        <td>闪光灯及附件类型: 外接闪光灯</td>
+                        <td>快门类型: 电子快门</td>
                 </tr>
         </tbody>
     </table>
