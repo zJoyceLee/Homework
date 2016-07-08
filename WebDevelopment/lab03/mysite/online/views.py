@@ -82,21 +82,22 @@ def regist(request):
 
 # Login Successful
 def index(req):
-    username = req.COOKIES.get('username','')
-    user = User.objects.get(username = username)
-    userdict = {
-        'username':username,
-        'email': user.email,
-        'birthday': user.birthday,
-        'birthplace': user.birthplace,
-        'gender': user.gender,
-        'hobby': user.hobby,
-        'info': user.info
-    }
-    return render_to_response(
-        'online/index.html',
-        userdict
-    )
+    try:
+        username = req.COOKIES.get('username','')
+        user = User.objects.get(username = username)
+        userdict = {
+            'username':username,
+            'phone': user.phone,
+            'email': user.email,
+            'addr': user.addr
+        }
+        return render_to_response(
+            'online/index.html',
+            userdict
+        )
+    except User.DoesNotExist:
+        print("Doesn't login")
+        return HttpResponseRedirect('/online/')
 
 def logout(req):
     response = HttpResponseRedirect('/online/login')
