@@ -100,3 +100,41 @@ for i, commodity_id in enumerate(commodity_ids):
         commodity_info[i]
     )
     execSQL(ss)
+
+
+print("\ninsert into Image:")
+commodity_ids = ['ILCE7SM2','ILCE7A72','ILCE7A71']
+image_for_ILCE7SM2 = [
+    'SonyILCE-7SM2A7SM2A7S2_1.jpg',
+    'SonyILCE-7SM2A7SM2A7S2_2.png',
+    'SonyILCE-7SM2A7SM2A7S2_3.png'
+]
+for img_path in image_for_ILCE7SM2:
+    # "{% static 'online/image/{}' %}"
+    ss = """
+    INSERT INTO Image(commodity_id, img_path) VALUES (
+    'ILCE7SM2', '{}');
+    """.format(img_path)
+    execSQL(ss)
+image_for_ILCE7A72 = [
+    'SonyLCE-7(FE24-240mm)A7_1.jpg',
+    'SonyLCE-7(FE24-240mm)A7_2.png',
+    'SonyLCE-7(FE24-240mm)A7_3.png'
+]
+for img_path in image_for_ILCE7A72:
+    ss = """
+    INSERT INTO Image(commodity_id, img_path) VALUES (
+    'ILCE7A72', '{}');
+    """.format(img_path)
+    execSQL(ss)
+image_for_ILCE7A71 = [
+    'SonyILCE-7A7_1.jpg',
+    'SonyILCE-7A7_2.png',
+    'SonyILCE-7A7_3.png'
+]
+for img_path in image_for_ILCE7A71:
+    ss = """
+    INSERT INTO Image(commodity_id, img_path) VALUES (
+    'ILCE7A71', '{}');
+    """.format(img_path)
+    execSQL(ss)
