@@ -1,51 +1,20 @@
-# from django.shortcuts import render
-
-# Create your views here.
-
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render,render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.template import loader, RequestContext
-from online.models import User
+from online.models import User, Adminuser, Commodity
 from django.views import generic
+from django.contrib import messages
 
 import random
 import json
 import hashlib
 from PIL import Image, ImageDraw, ImageFont
 
-# Commodity
 def commodity(request):
     if request.method == 'GET':
         return render(request, 'online/commodity.html')
 
-def add_commodity(request):
-    if request.method == 'GET':
-        return render(request, 'online/add_commodity.html')
-
-# Login
-def login(request):
-    if request.method == 'GET':
-        return render(request, 'online/login.html')
-
-    elif request.method == 'POST':
-        username = request.POST.get('username')
-        passwd = request.POST.get('password')
-
-        md5 = hashlib.md5()
-        md5.update(passwd.encode())
-        passwd_md5 = md5.hexdigest()
-
-        user = User.objects.filter(username = username, passwd = passwd_md5)
-        if user:
-            response = HttpResponseRedirect('/online/index')
-            response.set_cookie('username', username, 3600)
-            return response
-        else:
-            return HttpResponseRedirect('/online/regist/')
-
-
-# Regist
 @csrf_exempt
 def regist(request):
     if request.method == 'GET':
@@ -58,14 +27,9 @@ def regist(request):
         try:
             username = request.POST.get('username')
             password = request.POST.get('password')
-
+            phone = request.POST.get('phone')
             email = request.POST.get('email')
-            birthday = request.POST.get('birthday')
-            birthplace = request.POST.get('birthplace')
-            gender = request.POST.get('gender')
-            hobby = request.POST.getlist('hobby[]')
-            info = request.POST.get('messageArea')
-            # photo_path = request.POST.get('photo_path')
+            addr = request.POST.get('addr')
 
             md5 = hashlib.md5()
             md5.update(password.encode())
@@ -73,14 +37,10 @@ def regist(request):
 
             User.objects.create(
                 username = username,
-                passwd = password_md5,
+                password = password_md5,
+                phone = phone,
                 email = email,
-                birthday = birthday,
-                birthplace = birthplace,
-                gender =  gender,
-                hobby = json.dumps(hobby),
-                info = info,
-                # photo_path = photo_path
+                addr = addr
             )
         except Exception as e:
             return JsonResponse({
@@ -89,26 +49,56 @@ def regist(request):
             })
         return JsonResponse({'code': 0, 'msg': 'success'})
 
-# Login Successful
-def index(req):
-    username = req.COOKIES.get('username','')
-    user = User.objects.get(username = username)
-    userdict = {
-        'username':username,
-        'email': user.email,
-        'birthday': user.birthday,
-        'birthplace': user.birthplace,
-        'gender': user.gender,
-        'hobby': user.hobby,
-        'info': user.info
-    }
-    return render_to_response(
-        'online/index.html',
-        userdict
-    )
+
+# Login
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'online/login.html')
+
+    elif request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        md5 = hashlib.md5()
+        md5.update(password.encode())
+        passwd_md5 = md5.hexdigest()
+
+        user = Adminuser.objects.filter(username = username, password = passwd_md5)
+        if user:
+            response = HttpResponseRedirect('/online/add_commodity/')
+            response.set_cookie('username', username, 3600)
+            return HttpResponseRedirect('/online/add_commodity/')
+        else:
+            return HttpResponseRedirect('/online/')
+
+@csrf_exempt
+def add_commodity(request):
+    if request.method == 'GET':
+        return render(request, 'online/add_commodity.html')
+    elif request.method == 'POST':
+        try:
+                id = request.POST.get('id')
+                name = request.POST.get('name')
+                price = request.POST.get('price')
+                store = request.POST.get('store')
+                info = request.POST.get('messageArea')
+
+                Commodity.objects.create(
+                    id = id,
+                    name  = name,
+                    price  = price,
+                    store = store,
+                    info = info
+                )
+        except Exception as e:
+            return JsonResponse({
+                'code': 2,
+                'msg': 'Create Commodity failed, error: ' + str(e)
+            })
+        return JsonResponse({'code': 0, 'msg': 'success'})
 
 def logout(req):
-    response = HttpResponseRedirect('/online/login')
+    response = HttpResponseRedirect('/online/')
     response.delete_cookie('username')
     return response
 
@@ -145,44 +135,3 @@ def captcha(req):
         gen_captcha(captcha_str, response)
         req.session['captcha'] = captcha_str
         return response
-
-@csrf_exempt
-def update_info(request):
-    if request.method == 'POST':
-        captcha = request.POST.get('captcha')
-        print(captcha)
-        if captcha != request.session.get('captcha', None):
-            return JsonResponse({'code': 1, 'msg': 'invalid captcha'})
-        try:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-
-            email = request.POST.get('email')
-            birthday = request.POST.get('birthday')
-            birthplace = request.POST.get('birthplace')
-            gender = request.POST.get('gender')
-            hobby = request.POST.getlist('hobby[]')
-            info = request.POST.get('messageArea')
-            # photo_path = request.POST.get('photo_path')
-            print(info)
-
-            md5 = hashlib.md5()
-            md5.update(password.encode())
-            password_md5 = md5.hexdigest()
-
-            User.objects.filter(username = username).update(
-                passwd = password_md5,
-                email = email,
-                birthday = birthday,
-                birthplace = birthplace,
-                gender =  gender,
-                hobby = json.dumps(hobby),
-                info = info,
-                # photo_path = photo_path
-            )
-        except Exception as e:
-            return JsonResponse({
-                'code': 2,
-                'msg': 'Create User failed, error: ' + str(e)
-            })
-        return JsonResponse({'code': 0, 'msg': 'success'})
