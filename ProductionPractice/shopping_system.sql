@@ -40,7 +40,7 @@ CREATE TABLE Image (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Orders (
-    order_id CHAR(8) NOT NULL,
+    order_id INTEGER NOT NULL AUTO_INCREMENT,
     order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     total INTEGER NOT NULL DEFAULT 0,
     status INTEGER NOT NULL DEFAULT 0,
@@ -51,11 +51,11 @@ CREATE TABLE Orders (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE OrdersInfo (
-    order_id CHAR(8) NOT NULL,
+    order_id INTEGER NOT NULL,
     commodity_id  CHAR(8) NOT NULL,
     counter INTEGER NOT NULL DEFAULT 1,
 
-    PRIMARY KEy(order_id, commodity_id),
+    PRIMARY KEY(order_id, commodity_id),
     FOREIGN KEY(order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
     FOREIGN KEY(commodity_id) REFERENCES Commodity(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -65,7 +65,7 @@ CREATE TABLE ShoppingCart(
     commodity_id CHAR(8) NOT NULL,
     counter INTEGER NOT NULL DEFAULT 1,
 
-    PRIMARY KEY(username, commodity_id, counter),
+    PRIMARY KEY(username, commodity_id),
     FOREIGN KEY(username) REFERENCES User(username) ON DELETE CASCADE,
     FOREIGN KEY(commodity_id) REFERENCES Commodity(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
