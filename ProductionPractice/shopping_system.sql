@@ -71,14 +71,15 @@ CREATE TABLE ShoppingCart(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DELIMITER //
-CREATE TRIGGER total
+CREATE TRIGGER total_trigger
 AFTER
-UPDATE ON Orders
+INSERT ON OrdersInfo
 FOR EACH ROW
 BEGIN
     UPDATE Orders
-    SET NEW.total = OLD.total + OrdersInfo.counter * Commodity.price
-    WHERE OrdersInfo.commodity_id = Commodity.id;
+    SET Orders.total = Orders.total + NEW.counter * (
+        SELECT price FROM Commodity WHERE Commodity.id = NEW.commodity_id)
+    WHERE NEW.order_id =  Orders.order_id;
 END; //
 
 INSERT INTO AdminUser(username, password) VALUES ('admin', '21232f297a57a5a743894a0e4a801fc3');
