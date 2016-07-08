@@ -8,15 +8,8 @@
     <meta name="author" content="Joyce Lee">
 
     <link rel="stylesheet" type="text/css" href={% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}>
-    <link rel="stylesheet" type="text/css" href={% static 'node_modules/jasny-bootstrap/dist/css/jasny-bootstrap.min.css' %}>
-    <link rel="stylesheet" type="text/css" href={% static 'node_modules/jqueryui/jquery-ui.min.css'%}>
-    <link rel="stylesheet" type="text/css" href={% static 'node_modules/jqueryui/jquery-ui.theme.min.css'%}>
-
     <script type="text/javascript" src={% static 'node_modules/jquery/dist/jquery.min.js' %}></script>
     <script type="text/javascript" src={% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}></script>
-    <script type="text/javascript" src={% static 'node_modules/jasny-bootstrap/dist/js/jasny-bootstrap.min.js' %}></script>
-    <script type="text/javascript" src={% static 'node_modules/jqueryui/jquery-ui.min.js' %}></script>
-    <script type="text/javascript" src={% static 'node_modules/ckeditor/ckeditor.js' %}></script>
     <script type="text/javascript" src={% static 'online/js/js-form_vaildation.js' %}></script>
     <script type="text/javascript" src={% static 'online/js/js-regist.js' %}></script>
 
@@ -92,11 +85,10 @@
             <br />
 
             <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">Shipping Address</span>
-              <select name="country" id="country">
-              </select>
-              <select name="city" id="city">
-              </select>
+              <span class="input-group-addon" id="basic-addon1">Shopping Address</span>
+              <input name="addr" type="text" class="form-control"
+                      placeholder="Please enter your shopping address..."
+                      aria-describedby="basic-addon1">
             </div>
             <br />
 

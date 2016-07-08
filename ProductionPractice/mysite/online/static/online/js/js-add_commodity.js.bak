@@ -1,0 +1,29 @@
+'use strict';
+
+function submit_onclick(event) {
+  console.log('submit_onclick');
+  if (validate_form($("#register_form")[0]) === false) {
+    event.preventDefault();
+    return false;
+  }
+
+  var id = $("#add_commodity_form").find("input[name='commodity_id']").val();
+  var name = $("#add_commodity_form").find("input[name='commodity_name']").val();
+  var price = $("#add_commodity_form").find("input[name='commodity_price']").val();
+
+  var post_data = {
+    id: id,
+    name: name,
+    price: price,
+    store: store,
+    info: info
+  };
+
+  $.post('/online/regist/', post_data, function (data) {
+    if (data['code'] !== 0) {
+      alert(data['msg']);
+      return;
+    }
+    window.location = '/online/';
+  });
+}
