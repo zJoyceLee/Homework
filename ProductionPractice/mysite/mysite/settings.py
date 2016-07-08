@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'webLab03',
+        'NAME': 'shoppingSystem',
         'USER': 'root',
         'PASSWORD': '1',
         'HOST': 'localhost',
