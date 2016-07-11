@@ -26,6 +26,6 @@ function submit_onclick_commodity(event) {
       alert(data['msg']);
       return;
     }
-    window.location = '/online/commodity/';
+    window.location = '/online/add_commodity/';
   });
 }
