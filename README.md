@@ -3,17 +3,29 @@ Homework
 This repo is used to save and share  my homework codes.
 
 ----
-studio:
+environment:
 
 * Ubuntu14.04 LTS 64bit
 * Windows8.1 32bit (CPU z3735d)
+
+ProductionPratice
+============
+time: junior-summer
+
+Web Design : a shopping system via Python, Java
+
+PythonInnovationPractice
+============
+time: junior-summer
+
+Implement a form generator via Django Website
 
 ComputerArchitecture
 ============
 time: junior-spring
 
 ----
-studio:
+environment:
 * CodeBlocks16.01
 * TDM GCC  5.1
 
@@ -35,7 +47,7 @@ time: junior-spring
 some about PL/0, calculator
 
 ----
-studio:
+environment:
 
 * python3.4.3
 * CodeBlocks16.01
@@ -61,7 +73,7 @@ DataBase
 time: junior-winter, junior-spring
 
 ----
-studio:
+environment:
 
 * MySQL 5.7
 * [Django 1.9](https://www.djangoproject.com/)
