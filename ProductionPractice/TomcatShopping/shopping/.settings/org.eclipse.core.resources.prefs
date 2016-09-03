@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//WebRoot/html/add.jsp=UTF-8
+encoding//WebRoot/html/changeInfo.jsp=UTF-8
+encoding//WebRoot/html/contact.jsp=UTF-8
+encoding//WebRoot/html/details.jsp=UTF-8
+encoding//WebRoot/html/index.jsp=UTF-8
+encoding//WebRoot/html/login.jsp=UTF-8
+encoding//WebRoot/html/products.jsp=UTF-8
+encoding//WebRoot/html/user.jsp=UTF-8
+encoding//WebRoot/html/userInfo.jsp=UTF-8
+encoding//src/servlet/cartServlet.java=UTF-8
+encoding//src/servlet/changeServlet.java=UTF-8

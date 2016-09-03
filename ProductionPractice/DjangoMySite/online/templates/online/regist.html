@@ -1,0 +1,91 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Joyce Lee">
+
+    <link rel="stylesheet" type="text/css" href={% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}>
+    <script type="text/javascript" src={% static 'node_modules/jquery/dist/jquery.min.js' %}></script>
+    <script type="text/javascript" src={% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}></script>
+    <script type="text/javascript" src={% static 'online/js/js-form_vaildation.js' %}></script>
+    <script type="text/javascript" src={% static 'online/js/js-regist.js' %}></script>
+
+    <title>Regist</title>
+  </head>
+
+  <body>
+    {% include "online/nav-header.partial.html" %}
+    <div class="col-sm-5" style="width: 40%; margin: 1% 30%;">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <form id="register_form" method = 'post' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">UserName</span>
+              <input name="username" type="text" class="form-control"
+                      placeholder="Please enter your username..."
+                      aria-describedby="basic-addon1">
+              <span id="tips"></span>
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Password</span>
+              <input name="password" type="password" class="form-control"
+                      placeholder="Please enter your password..."
+                      aria-describedby="basic-addon2">
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Confirm</span>
+              <input name="confirm_password" type="password" class="form-control"
+                      placeholder="Please confirm your password..."
+                      aria-describedby="basic-addon2">
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Phone</span>
+              <input name="phone" type="text" class="form-control"
+                      placeholder="Please enter your mobel phone number..."
+                      aria-describedby="basic-addon1">
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Email</span>
+              <input name="email" type="text" class="form-control"
+                      placeholder="Please enter your email..."
+                      aria-describedby="basic-addon1">
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">Shopping Address</span>
+              <input name="addr" type="text" class="form-control"
+                      placeholder="Please enter your shopping address..."
+                      aria-describedby="basic-addon1">
+            </div>
+            <br />
+
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Captcha</span>
+              <input type="text" name="captcha" class="form-control"
+                      aria-describedby="basic-addon1" style="width: 50%;">
+              <img src="/online/captcha/" alt="captcha">
+            </div>
+
+            <div>
+              <input type="button" value="submit" class="btn btn-default btn-block" style="width: 50%; float: right;" onclick="submit_onclick(event)" />
+              <input type="reset" value="Reset" class="btn btn-default btn-block" style="width: 50%;" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
