@@ -10,3 +10,4 @@ encoding//WebRoot/html/user.jsp=UTF-8
 encoding//WebRoot/html/userInfo.jsp=UTF-8
 encoding//src/servlet/cartServlet.java=UTF-8
 encoding//src/servlet/changeServlet.java=UTF-8
+encoding//src/servlet/loginServlet.java=GBK
