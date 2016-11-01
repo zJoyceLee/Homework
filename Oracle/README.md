@@ -14,5 +14,4 @@ _How to start Oracle?_
 
 _How to run a script with sqlplus?_
 
-    SQL> @ script.sql
-    SQL> {START|@} {file}
+    SQL> {START|@} [path] {file}
