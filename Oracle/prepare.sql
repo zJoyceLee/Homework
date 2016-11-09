@@ -10,7 +10,8 @@ DROP TABLE C;
 
 CREATE TABLE DEPT (
   deptno NUMBER(2) NOT NULL PRIMARY KEY,
-  dname VARCHAR2(20)
+  dname VARCHAR2(20),
+  loc VARCHAR2(20)
 );
 DESCRIBE DEPT;
 
@@ -103,10 +104,10 @@ CREATE TABLE SC (
 DESCRIBE SC;
 
 
-INSERT INTO DEPT(deptno, dname) VALUES (10, 'accounting');
-INSERT INTO DEPT(deptno, dname) VALUES (20, 'research');
-INSERT INTO DEPT(deptno, dname) VALUES (30, 'sales');
-INSERT INTO DEPT(deptno, dname) VALUES (40, 'operations');
+INSERT INTO DEPT(deptno, dname, loc) VALUES (10, 'accounting', 'shanghai');
+INSERT INTO DEPT(deptno, dname, loc) VALUES (20, 'research', 'new york');
+INSERT INTO DEPT(deptno, dname, loc) VALUES (30, 'sales', 'beijing');
+INSERT INTO DEPT(deptno, dname, loc) VALUES (40, 'operations', 'dallas');
 SELECT * FROM DEPT;
 
 INSERT INTO EMP(empno, ename, job, mgr, hiredate, sal, deptno) VALUES
