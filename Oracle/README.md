@@ -15,3 +15,11 @@ _How to start Oracle?_
 _How to run a script with sqlplus?_
 
     SQL> {START|@} [path] {file}
+
+## Prepare
+
+    SQL> @[path] prepare.sql
+
+This file is used to do some prepare job. Contains: drop, create, insert.
+
+First time run the script, you should use '--' to unable 'drop' command.
