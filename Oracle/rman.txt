@@ -1,0 +1,40 @@
+connect target sys/ubuntu;
+configure default device type to disk;
+configure device type disk parallelism 2;
+configure channel 1 device type disk format '/home/ubuntu/bkup/rman/backup_%U';
+configure channel 2 device type disk format '/home/ubuntu/bkup/rman/backup2_%U';
+configure controlfile autobackup on;
+configure controlfile autobackup format for device type disk to '/home/ubuntu/bkup/rman/backup_%F';
+show all;
+report schema;
+run {
+  allocate channel ch1 type disk;
+  allocate channel ch2 type disk;
+backup full
+  format '/home/ubuntu/bkup/rman/database_%d_%s_%p_%t'
+    database include current controlfile;
+    sql 'alter system archive log current';
+    backup
+  format '/home/ubuntu/bkup/rman/arch%d_%s_%p_%t'
+    archivelog all delete all input;
+    release channel ch1;
+    release channel ch2;
+}
+-- backup
+run {allocate channel ch1 type disk;allocate channel ch2 type disk;backup full format '/home/ubuntu/bkup/rman/database_%d_%s_%p_%t'   database include current controlfile;   sql 'alter system archive log current';   backup format '/home/ubuntu/bkup/rman/arch%d_%s_%p_%t'   archivelog all delete all input;   release channel ch1;   release channel ch2;}
+
+run {
+    shutdown immediate;
+    startup mount;
+    allocate channel c1 type disk;
+    allocate channel c2 type disk;
+    restore database;
+    recover database;
+    alter database open;
+    release channel c1;
+    release channel c2;
+}
+
+--recover
+connect target sys/ubuntu;
+run {    shutdown immediate;    startup mount;    allocate channel c1 type disk;    allocate channel c2 type disk;    restore database;    recover database;    alter database open;    release channel c1;    release channel c2;}
