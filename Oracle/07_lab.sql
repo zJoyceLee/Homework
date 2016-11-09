@@ -1,76 +1,147 @@
-SYSTEM echo '1．声明显式游标';
-SYSTEM echo '声明一个游标用来读取基表EMP中部门号是20且工作为分析员的职工：';
-DECLARE CURSOR c1 IS
-SELECT ename, sal, hiredate FROM EMP WHERE detpno = 20 AND  job = 'analyst';
-v_name VARCHAR2(10);
-v_sal NUMBER(7, 2);
-v_hiredate DATE;
+SET SERVEROUTPUT ON;
+
+DECLARE
+    CURSOR c1 IS
+        SELECT ename, sal, hiredate FROM EMP WHERE deptno = 20 AND  job = 'analyst';
+    v_name      EMP.ename%TYPE;
+    v_sal           EMP.sal%TYPE;
+    v_hiredate  EMP.hiredate%TYPE;
+
+    CURSOR c2 IS
+        SELECT * FROM EMP WHERE deptno = 20 AND job = 'analyst';
+    v_emp EMP%ROWTYPE;
+    v_count NUMBER := 0;
 BEGIN
+    DBMS_OUTPUT.PUT_LINE('Q1:');
+
     OPEN c1;
     FETCH c1 INTO v_name, v_sal, v_hiredate;
-    CLOSE c1;
-END;
-
-SYSTEM echo '2．游标的应用';
-SYSTEM echo '使用游标属性判断游标是否打开：';
-IF c1%OPEN THEN
-    FETCH c1 INTO v_ename,  v_sal, v_hiredate;
-ELSE
-    OPEN c1;
-END IF;
-LOOP
-    FETCH c1 INTO v_ename, v_sal, v_hiredate;
-    EXIT WHEN c1%ROWCOUNT > 10;
-END LOOP;
-
-SYSTEM echo '利用游标修改数据，如果EMP中部门号是20，工作为分析员的职工工资小于2000，更改为2000：';
-DECLARE CURSOR c2 IS
-SELECT empno, sal, hiredate, rowid
-FROM EMP WHERE deptno = 20 AND job = 'analyst'
-FOR UPDATE OF sal;
-EMP_record c2%ROWTYPE;
-BEGIN
-    OPEN c2;
-    FETCH c2 INTO EMP_record;
-    IF EMP_record.sal < 2000 THEN
-        UPDATE EMP SET sal = 2000 WHERE empno = EMP_record.empno;
+    IF c1%FOUND THEN
+    DBMS_OUTPUT.PUT_LINE(
+        'name: ' || v_name ||
+        ', salary: '  || v_sal ||
+        ', hire date: '  || v_hiredate);
     END IF;
-END;
+    CLOSE c1;
 
-SYSTEM echo '利用游标，如果部门是SALES，地址不是DALLAS的，地址更改为DALLAS；如果部门不是SALES，地址不是NEW YORK的，地址更改为NEW YORK：';
-DECLARE CURSOR c3 IS
-SELECT dname, loc FROM DEPT FOR UPDATE OF loc;
-    DEPT_rec c3%ROWTYPE;
-    sales_count NUMBER := 0;
-    non_sales NUMBER := 0;
+    DBMS_OUTPUT.PUT_LINE('Q2.1:');
+
+    IF c2%ISOPEN THEN
+        FETCH c2 INTO v_emp;
+        DBMS_OUTPUT.PUT_LINE('-----cursor already open.-----');
+    ELSE
+        OPEN c2;
+        DBMS_OUTPUT.PUT_LINE('-----open c2.-----');
+    END IF;
+
+    LOOP
+        FETCH c2 INTO v_emp;
+        IF c2%NOTFOUND THEN
+            EXIT;
+        ELSE
+            DBMS_OUTPUT.PUT_LINE(
+                'name: ' || v_emp.ename ||
+                ', salary: '  || v_emp.sal ||
+                ', hire date: '  || v_emp.hiredate);
+        END IF;
+    END LOOP;
+    CLOSE c2;
+END;
+/
+
+UPDATE EMP SET sal = 1000 WHERE empno = 7788;
+SELECT empno, sal, hiredate FROM EMP WHERE deptno = 20 AND job = 'analyst';
+DECLARE
+    CURSOR c3 IS
+    SELECT empno, sal, hiredate, rowid
+    FROM EMP WHERE deptno = 20 AND job = 'analyst'
+    FOR UPDATE OF sal;
+    EMP_record c3%ROWTYPE;
 BEGIN
+    DBMS_OUTPUT.PUT_LINE('Q2.2:');
     OPEN c3;
     LOOP
-        FETCH c3 INTO DEPT_rec;
-        EXIT WHEN c3%NOTFOUND;
-        IF DEPT_rec.dname = 'sales' AND DEPT_rec.loc != 'dallas' THEN
-            UPDATE DEPT SET loc = 'dallas' WHERE CURRENT OF c3;
-            sales_count := sales_count + 1;
-        ELSE IF DEPT_rec.dname != 'sales' AND DEPT_rec.loc !=  'new yourk' THEN
-            non_sales := non_sales + 1;
+        FETCH c3 INTO EMP_record;
+        IF c3%NOTFOUND THEN
+            EXIT;
+        ELSE
+            IF EMP_record.sal < 2000 THEN
+                 UPDATE EMP SET sal = 2000 WHERE empno = EMP_record.empno;
+            END IF;
         END IF;
     END LOOP;
     CLOSE c3;
-    INSERT INTO counts(sales_set, non_sales_set) VALUES(sales_count, non_sales);
     COMMIT;
 END;
+/
+SELECT empno, sal, hiredate FROM EMP WHERE deptno = 20 AND job = 'analyst';
 
-SYSTEM echo '3．创建触发器, 在SCOTT的EMP表上建立语句前触发器EMP_PERMIT_CHANGES。';
-CREATE OR REPLACE TRIGGER scott.emp_hello
-BEFORE
-DELETE OR INSERT OR UPDATE
-ON scott.EMP
+
+CREATE TABLE COUNTS(
+    sales_set NUMBER,
+    non_sales_set NUMBER
+);
+DESCRIBE COUNTS;
+SELECT * FROM DEPT;
+DECLARE
+CURSOR c4 IS
+SELECT dname, loc FROM DEPT FOR UPDATE OF loc;
+    DEPT_rec c4%ROWTYPE;
+    sales_count NUMBER := 0;
+    non_sales NUMBER := 0;
 BEGIN
-    RAISE_APPLICATIO_ERROR(-20001, 'How are you!');
+    DBMS_OUTPUT.PUT_LINE('Q2.3:');
+    OPEN c4;
+    LOOP
+        FETCH c4 INTO DEPT_rec;
+        EXIT WHEN c4%NOTFOUND;
+        IF DEPT_rec.dname = 'sales' AND DEPT_rec.loc != 'dallas' THEN
+            UPDATE DEPT SET loc = 'dallas' WHERE CURRENT OF c4;
+            sales_count := sales_count + 1;
+        ELSE
+            IF DEPT_rec.dname != 'sales' AND DEPT_rec.loc !=  'new york' THEN
+                UPDATE DEPT SET loc = 'new york' WHERE CURRENT OF c4;
+                non_sales := non_sales + 1;
+            END IF;
+        END IF;
+    END LOOP;
+    CLOSE c4;
+    INSERT INTO COUNTS(sales_set, non_sales_set) VALUES(sales_count, non_sales);
+    COMMIT;
 END;
+/
+SELECT * FROM DEPT;
+SELECT * FROM COUNTS;
+DROP TABLE COUNTS;
 
-SYSTEM echo '4．修改触发器, 使EMP_Hello触发器不能触发：';
-ALTER TRIGGER scott.emp_hello DISABLE;
 
-SYSTEM echo '5．删除触发器';
-DROP TRIGGER scott.emp_hello;
+CREATE USER scott IDENTIFIED by ubuntu;
+GRANT DBA TO scott;
+DISCONNECT;
+
+CONN scott/ubuntu;
+CREATE TABLE S_EMP AS (SELECT * FROM sys.EMP);
+DESCRIBE S_EMP;
+
+SET SERVEROUTPUT ON;
+CREATE  OR REPLACE TRIGGER emp_hello
+BEFORE DELETE OR INSERT OR UPDATE ON S_EMP
+BEGIN
+    --RAISE_APPLICATIO_ERROR(-20001, 'How are you!');
+    DBMS_OUTPUT.PUT_LINE('How are you!');
+END;
+/
+
+INSERT INTO S_EMP(empno, deptno) VALUES (9000, 10);
+DELETE FROM S_EMP WHERE empno = 9000;
+
+ALTER TRIGGER emp_hello DISABLE;
+INSERT INTO S_EMP(empno, deptno) VALUES (9000, 10);
+DELETE FROM S_EMP WHERE empno = 9000;
+
+DROP TRIGGER emp_hello;
+
+DISCONNECT;
+CONN sys/ubuntu as sysdba;
+DROP TABLE scott.S_EMP;
+DROP USER scott;
