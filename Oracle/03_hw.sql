@@ -30,14 +30,14 @@ INSERT INTO SC(s#, c#, grade) VALUES ('s5', 'c1', 70);
 INSERT INTO SC(s#, c#, grade) VALUES ('s5', 'c2', 60);
 INSERT INTO SC(s#, c#, grade) VALUES ('s5', 'c3', 80);
 INSERT INTO SC(s#, c#, grade) VALUES ('s5', 'c5', 65);
-INSERT INTO SC(s#, c#, grade) VALUES ('s5', 'c1', 90);
-INSERT INTO SC(s#, c#) VALUES ('s5', 'c2');
-INSERT INTO SC(s#, c#, grade) VALUES ('s5', 'c3', 90);
-INSERT INTO SC(s#, c#) VALUES ('s5', 'c5');
+INSERT INTO SC(s#, c#, grade) VALUES ('s8', 'c1', 90);
+INSERT INTO SC(s#, c#) VALUES ('s8', 'c2');
+INSERT INTO SC(s#, c#, grade) VALUES ('s8', 'c3', 90);
+INSERT INTO SC(s#, c#) VALUES ('s8', 'c5');
 
-SELECT * FORM S;
+SELECT * FROM S;
 SELECT * FROM C;
-SELECT * FORM SC;
+SELECT * FROM SC;
 
 SYSTEM echo '2_1. 把C2非空成绩提高10%';
 UPDATE SC SET grade = grade * 1.1 WHERE c# = 'c2' AND grade IS NOT NULL;

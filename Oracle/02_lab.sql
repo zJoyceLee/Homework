@@ -27,6 +27,6 @@ CREATE TABLE CUSTOMER(
 );
 
 CREATE TABLE STATE(
-  state_cd VARCHAR(2) NOT NULL,
+  state_id VARCHAR(2) NOT NULL,
   state_name VARCHAR2(30)
 );
