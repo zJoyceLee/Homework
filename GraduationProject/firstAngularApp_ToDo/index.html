@@ -15,21 +15,13 @@
     <h1 ng-if="todos.length > 0">ToDo List</h1>
     <div>
       <li ng-repeat="item in todos track by $index">
+        <button ng-click="todos.splice($index,1)">Del</button>
         {{item}}
       </li>
     </div>
   </body>
 
   <script src="./js/angular.min.js"></script>
-  <script>
-    var app = angular.module('todoList', []);
-    app.controller('myCtrl', function($scope) {
-      $scope.todo = "";
-      $scope.todos = [];
-      $scope.add = function(){
-        $scope.todos.push($scope.todo);	
-      };
-    });
-  </script>
+  <script src="./js/todo.js"></script>
 
 </html>
