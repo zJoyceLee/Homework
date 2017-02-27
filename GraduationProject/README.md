@@ -1,8 +1,8 @@
-### Graduation Project
+# Graduation Project
 
-# first Angular app
+### first Angular app
 - This folder saved the first angularjs app.
 - It's a todo List.
 
-# Video Download System
+### Video Download System
 [MyProject](https://github.com/zJoyceLee/VideoDownloadSystem)
