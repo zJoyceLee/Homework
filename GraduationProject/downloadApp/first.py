@@ -19,7 +19,7 @@ class downloader:
                 ranges.append((i*offset,  (i+1)*offset))
         return ranges
     def run(self, dest):
-        with open('{}/{}'.format(dest, self.name), 'bw') as f:
+        with open('{}/{}'.format(dest, self.name), 'wb') as f:
             for piece  in self.get_range():
                 res =  requests.get(
                     self.url,
@@ -30,7 +30,7 @@ class downloader:
                 )
                 f.seek(piece[0])
                 f.write(res.content)
-
+                print('{}-{} success'.format(piece[0], piece[1]))
 
 
 with open('./source/url.json', 'r') as src:
