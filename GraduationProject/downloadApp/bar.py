@@ -20,6 +20,7 @@ with open('./download/bar.gif', 'wb') as f:
         start, end = piece
         h = {'Range': 'Bytes={}-{}'.format(start, end), 'Accept-Encoding': '*'}
         res = requests.get(url, headers = h)
+        f.seek(start)
         f.write(res.content)
         pbar.update(i)
 
