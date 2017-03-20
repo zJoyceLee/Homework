@@ -7,7 +7,7 @@ class downloader:
         self.thread_num = 8
         self.name = '{}{}'.format(myname, myurl[myurl.rfind('.'):])
         r = requests.head(self.url)
-        self.total = int(r.headers['Content-length'])
+        self.total = int(r.headers['Content-Length'])
         print('{}\ntotal is {}.'.format(self.url, self.total))
     def get_range(self):
         ranges = []
