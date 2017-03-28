@@ -17,9 +17,9 @@ except:
 
 print(url)
 res = requests.get(url)
-res.encoding='utf-8'
 
 soup = BeautifulSoup(res.text)
+# print(soup.prettify())
 content_lst = soup.find_all(get_a_href_title)
 
 [print('href: {}\ntitle: {}\ntext: {}\n'.format(x.get('href'), x.get('title'),x.get_text())) for x in content_lst]
