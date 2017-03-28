@@ -1,26 +1,25 @@
 # -*- coding: utf-8 -*-
+import sys
+import time
+import requests
+from bs4 import BeautifulSoup
 
-import urllib
-import urllib2
-import re
+def get_a_href_title(tag):
+    return tag.has_attr('href') and tag.has_attr('title')
 
-class Spider:
-    def  __init__(self):
-        self.siteURL =  'http://mm.taobao.com/json/request_top_list.htm'
+url =  'http://blog.jobbole.com/'
+try:
+    url = sys.argv[1]
+except:
+    print('[USAGE]:  python spider.py [url]')
+    print('Default url: {}'.format(url))
+    time.sleep(3)
 
-    def getPage(self, pageIndex):
-        url = "{}?page={}".format(self.siteURL, str(pageIndex))
-        print(url)
-        request = urllib2.Request(url)
-        response = urllib2.urlopen(request)
-        return response.read().decode('gbk')
+print(url)
+res = requests.get(url)
+res.encoding='utf-8'
 
-    def getContents(self,  pageIndex):
-        page = self.getPage(pageIndex)
-        pattern = re.compile('<div class="list-item".*?pic-word.*?<a href="(.*?)".*?<img src="(.*?)".*?<a class="lady-name.*?>(.*?)</a>.*?<strong>(.*?)</strong>.*?<span>(.*?)</span>',re.S)
-        items = re.findall(parttern, page)
-        for  item  in items:
-            print(item[0], item[1], item[2], item[3], item[4])
+soup = BeautifulSoup(res.text)
+content_lst = soup.find_all(get_a_href_title)
 
-spider = Spider()
-spider.getContents(1)
+[print('href: {}\ntitle: {}\ntext: {}\n'.format(x.get('href'), x.get('title'),x.get_text())) for x in content_lst]
