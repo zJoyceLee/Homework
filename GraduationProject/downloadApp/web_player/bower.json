@@ -1,0 +1,34 @@
+{
+  "name": "download",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "Joyce"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "download",
+    "video"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#^1.6.3",
+    "bootstrap": "^3.3.7",
+    "videogular": "^1.4.4",
+    "angular-sanitize": "^1.6.3",
+    "videogular-themes-default": "^1.4.4",
+    "videogular-controls": "^1.4.4",
+    "videogular-buffering": "^1.4.4",
+    "videogular-overlay-play": "^1.4.4",
+    "videogular-poster": "^1.4.4",
+    "videogular-ima-ads": "^1.4.4",
+    "videogular-angulartics": "^1.4.4"
+  }
+}
