@@ -22,7 +22,7 @@ class Spider():
     def parse(self):
         res = requests.get(self.url)
         soup = BeautifulSoup(res.content)
-        content_lst = soup.find_all('a')
+        content_lst = soup.find_all(attrs = {"class": "sn"})
         print('**********C-ontent**********')
         [print('''--link--{}
                    \n--title--{}
